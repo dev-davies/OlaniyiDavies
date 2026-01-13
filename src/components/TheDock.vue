@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, FolderGit2 } from 'lucide-vue-next';
+import { Home, FolderGit2, Github, Linkedin, Mail } from 'lucide-vue-next';
 import ThemeToggle from './ThemeToggle.vue';
 import { RouterLink } from 'vue-router';
 
@@ -7,25 +7,42 @@ import { RouterLink } from 'vue-router';
 const dockItems = [
   { name: 'Home', icon: Home, route: '/' },
   { name: 'Projects', icon: FolderGit2, route: '/projects' },
-  // Add more items here
+  { name: 'GitHub', icon: Github, href: 'https://github.com/dev-davies/' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/davies-folorunso-sentinel/' },
+  { name: 'Contact', icon: Mail, href: 'mailto:dvsfolorunso@gmail.com' },
 ]
 </script>
 
 <template>
-  <div class="fixed-bottom mb-4 d-flex justify-content-center pointer-events-none">
+  <div class="fixed-bottom mb-4 d-flex justify-content-center pointer-events-none" style="z-index: 1050;">
     <div class="dock-container glass-effect p-2 rounded-4 d-flex gap-2 align-items-center shadow-lg pointer-events-auto">
       
-      <RouterLink 
-        v-for="item in dockItems" 
-        :key="item.name" 
-        :to="item.route"
-        class="dock-item btn btn-link text-decoration-none d-flex align-items-center justify-content-center"
-        v-motion
-        :initial="{ scale: 1 }"
-        :hovered="{ scale: 1.2 }"
-      >
-        <component :is="item.icon" class="icon-size" />
-      </RouterLink>
+      <template v-for="item in dockItems" :key="item.name">
+        <!-- Internal Link -->
+        <RouterLink 
+          v-if="item.route"
+          :to="item.route"
+          class="dock-item btn btn-link text-decoration-none d-flex align-items-center justify-content-center"
+          v-motion
+          :initial="{ scale: 1 }"
+          :hovered="{ scale: 1.2 }"
+        >
+          <component :is="item.icon" class="icon-size" />
+        </RouterLink>
+
+        <!-- External Link -->
+        <a 
+          v-else
+          :href="item.href"
+          target="_blank"
+          class="dock-item btn btn-link text-decoration-none d-flex align-items-center justify-content-center"
+           v-motion
+          :initial="{ scale: 1 }"
+          :hovered="{ scale: 1.2 }"
+        >
+          <component :is="item.icon" class="icon-size" />
+        </a>
+      </template>
 
       <div class="vr mx-1 bg-secondary opacity-50"></div>
       
@@ -62,5 +79,23 @@ const dockItems = [
 .icon-size {
   width: 24px;
   height: 24px;
+}
+
+@media (max-width: 768px) {
+  .dock-container {
+    padding: 0.25rem !important; /* Smaller padding */
+    gap: 0.25rem !important;
+  }
+
+  .dock-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .icon-size {
+    width: 20px;
+    height: 20px;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Camera, Database, Layout, Smartphone, Terminal, Figma, Server } from 'lucide-vue-next';
+import { Camera, Database, Layout, Smartphone, Terminal, Globe, Server, Github, Linkedin, Mail } from 'lucide-vue-next';
 import portraitUrl from '@/assets/img/portrait.jpg';
 import { onMounted, onUnmounted, ref, nextTick } from 'vue';
 
@@ -53,12 +53,12 @@ onUnmounted(() => {
 });
 
 const skills = [
-  { name: 'Frontend', icon: Layout, desc: 'Vue, React, TypeScript' },
-  { name: 'Backend', icon: Server, desc: 'Node.js, Python, Flask' },
-  { name: 'Database', icon: Database, desc: 'PostgreSQL, MongoDB' },
-  { name: 'Mobile', icon: Smartphone, desc: 'React Native, Flutter' },
-  { name: 'Design', icon: Figma, desc: 'Figma, Adobe XD' },
-  { name: 'DevOps', icon: Terminal, desc: 'Docker, AWS, CI/CD' },
+  { name: 'Frontend', icon: Layout, desc: 'HTML, CSS, Bootstrap, Vue.js' },
+  { name: 'Backend', icon: Server, desc: 'PHP (Laravel), Python (Flask)' },
+  { name: 'Database', icon: Database, desc: 'PostgreSQL, SQLite' },
+  { name: 'Mobile', icon: Smartphone, desc: 'PWA' },
+  { name: 'DevOps', icon: Terminal, desc: 'Docker' },
+  { name: 'WordPress', icon: Globe, desc: 'Elementor' },
 ];
 </script>
 
@@ -85,11 +85,16 @@ const skills = [
            </h1>
         </div>
         
-        <p class="lead mb-4 text-secondary">Creative Coder | Problem Solver</p>
+        <p class="lead mb-5 text-secondary mx-auto" style="max-width: 700px; line-height: 1.6;">
+          I design and build clean, responsive web experiences where clarity comes first and complexity stays politely behind the curtain. Every pixel has a job, every interaction a purpose. This is a space for thoughtful front-end craftsmanship.
+        </p>
         <div class="d-flex justify-content-center gap-3">
-          <button class="btn btn-primary btn-lg rounded-pill px-4">
+          <RouterLink to="/projects" class="btn btn-primary btn-lg rounded-pill px-4">
              <Camera class="me-2 w-5 h-5" /> View Work
-          </button>
+          </RouterLink>
+          <a href="mailto:dvsfolorunso@gmail.com" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+             Contact Me
+          </a>
         </div>
       </div>
     </div>
@@ -99,6 +104,7 @@ const skills = [
       <div class="col-lg-8 text-center">
         <h2 class="h3 fw-bold mb-4">About Me</h2>
         <div 
+          class="card about-card border-0 shadow-sm p-4 p-md-5"
           v-motion
           :initial="{ opacity: 0, y: 30 }"
           :visible="{ opacity: 1, y: 0, transition: { duration: 600 } }"
@@ -108,9 +114,12 @@ const skills = [
             I build accessible, pixel-perfect, and performant web experiences.
           </p>
           <p class="text-secondary mb-0">
-            With a background in creative coding and a love for clean aesthetics, I strive to create digital products 
-            that are not only functional but also visually compelling. When I'm not coding, you can find me exploring new coffee shops, 
-            reading sci-fi novels, or tinkering with new tech stacks.
+            Hi — I'm Davies, a developer based in Nigeria. I specialise in building maintainable web apps with a focus on usability, 
+            accessibility, and a little personality. I’m a developer who enjoys turning ideas into digital products that
+             don’t panic when they grow. I build projects with scale in mind from sleek landing pages that load fast and convert quietly, 
+             to full-blown web applications and ecommerce platforms designed to handle real users doing real things.
+              My approach blends structure and curiosity. 
+          I care about clean architecture, reusable components, and interfaces that stay intuitive even as features multiply.
           </p>
         </div>
       </div>
@@ -199,6 +208,40 @@ const skills = [
         </div>
       </div>
     </div>
+
+    <!-- Contact Section -->
+    <div class="row justify-content-center py-5 mb-5">
+      <div class="col-lg-8 text-center">
+        <h2 class="h3 fw-bold mb-4">Get in Touch</h2>
+        <p class="lead text-secondary mb-5">
+          Whether you have a question, a project idea, or just want to say hi, my inbox is always open.
+        </p>
+
+        <div class="d-flex justify-content-center gap-4 mb-4">
+           
+           <a href="https://github.com/dev-davies/" target="_blank" class="text-decoration-none text-secondary social-link">
+             <Github class="w-8 h-8" />
+             <span class="d-block small mt-2">GitHub</span>
+           </a>
+
+           <a href="https://www.linkedin.com/in/davies-folorunso-sentinel/" target="_blank" class="text-decoration-none text-secondary social-link">
+             <Linkedin class="w-8 h-8" />
+             <span class="d-block small mt-2">LinkedIn</span>
+           </a>
+
+           <a href="mailto:dvsfolorunso@gmail.com" class="text-decoration-none text-secondary social-link">
+             <Mail class="w-8 h-8" />
+             <span class="d-block small mt-2">Email</span>
+           </a>
+
+        </div>
+        
+        <p class="text-muted small">
+          &copy; {{ new Date().getFullYear() }} Davies Folorunso. Built with Vue & Bootstrap.
+        </p>
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -264,4 +307,53 @@ const skills = [
    but we want them to start invisible if we were using v-enter-from.
    Since we use a persistent list and toggle class 'out', 
    when 'out' is removed, it transitions back to base state.) */
+
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 3rem; /* Scale down hero text */
+  }
+  
+  .avatar-container {
+    width: 160px;
+    height: 220px;
+  }
+  
+  .lead {
+    font-size: 1rem;
+  }
+
+  /* Adjust timeline for smaller screens */
+  .experience-timeline .ps-5 {
+    padding-left: 2rem !important;
+  }
+}
+
+.social-link {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  color: var(--text-color) !important;
+}
+
+.w-8 { width: 32px; }
+.h-8 { height: 32px; }
+
+.about-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.about-card:hover {
+  transform: translateY(-8px); /* Stronger lift */
+  border-color: rgba(0,0,0,0.2) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+}
+
+[data-bs-theme="dark"] .about-card:hover {
+  border-color: rgba(255,255,255,0.3) !important;
+  box-shadow: 0 20px 40px rgba(255,255,255,0.05) !important; /* White glow */
+}
 </style>

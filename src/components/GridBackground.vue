@@ -3,7 +3,20 @@ import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMouse, useWindowSize, useDark } from '@vueuse/core'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
-const { x: mouseX, y: mouseY } = useMouse()
+// Initialize with negative values to ensure 'inactive' state at start
+// Initialize with negative values to ensure 'inactive' state at start
+const mouseX = ref(-1000) 
+const mouseY = ref(-1000)
+
+// Standard mouse tracking (fallback for desktop)
+const { x: desktopX, y: desktopY } = useMouse({ type: 'client' })
+
+watch([desktopX, desktopY], () => {
+  // Only use mouse if not currently processing touch (simple heuristic)
+  mouseX.value = desktopX.value
+  mouseY.value = desktopY.value
+})
+
 const { width, height } = useWindowSize()
 const isDark = useDark({ selector: 'body', attribute: 'data-bs-theme' })
 
@@ -24,8 +37,15 @@ let animationFrameId: number
 const initParticles = () => {
   particles.length = 0
   
-  // Dynamic Count: Day mode is "busier" (600) vs Night mode "stars" (200)
-  const count = isDark.value ? 200 : 600
+  // Dynamic Count Logic:
+  // 1. Dark Mode: Always 200 (Stars)
+  // 2. Light Mode: 
+  //    - Desktop: 1200 (Dust Storm)
+  //    - Mobile (<768px): 400 (Light Dust - Performance friendly)
+  let count = 200
+  if (!isDark.value) {
+    count = width.value < 768 ? 400 : 1200
+  }
   
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -40,8 +60,19 @@ const initParticles = () => {
   }
 }
 
+// Handle Touch Events for Mobile Interaction
+const handleTouchMove = (e: TouchEvent) => {
+  if (e.touches && e.touches.length > 0) {
+    const touch = e.touches[0]
+    if (touch) {
+      mouseX.value = touch.clientX
+      mouseY.value = touch.clientY
+    }
+  }
+}
+
 // Watch for theme changes to re-init particles
-watch(isDark, () => {
+watch([isDark, width], () => { // Also re-init on resize to adjust density
   initParticles()
 })
 
@@ -54,7 +85,7 @@ const animate = () => {
   ctx.clearRect(0, 0, width.value, height.value)
   
   particles.forEach(p => {
-    // 1. Calculate distance to mouse
+    // 1. Calculate distance to mouse/touch
     const dx = mouseX.value - p.x
     const dy = mouseY.value - p.y
     const distance = Math.sqrt(dx * dx + dy * dy)
@@ -67,7 +98,7 @@ const animate = () => {
       p.opacity = 0.6 // Consistent solid look in Light Mode
     }
 
-    // 3. Mouse Attraction
+    // 3. Attraction Logic (Mouse & Touch)
     const forceDistance = 200
     if (distance < forceDistance) {
       const force = (forceDistance - distance) / forceDistance
@@ -147,7 +178,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" class="grid-canvas"></canvas>
+  <canvas ref="canvas" class="grid-canvas" @touchmove.passive="handleTouchMove"></canvas>
 </template>
 
 <style scoped>
