@@ -1,19 +1,123 @@
 <script setup lang="ts">
-import { Camera } from 'lucide-vue-next';
+import { Camera, Database, Layout, Smartphone, Terminal, Figma, Server } from 'lucide-vue-next';
+import portraitUrl from '@/assets/img/portrait.jpg'; // Import the image
+
+const skills = [
+  { name: 'Frontend', icon: Layout, desc: 'Vue, React, TypeScript' },
+  { name: 'Backend', icon: Server, desc: 'Node.js, Python, Flask' },
+  { name: 'Database', icon: Database, desc: 'PostgreSQL, MongoDB' },
+  { name: 'Mobile', icon: Smartphone, desc: 'React Native, Flutter' },
+  { name: 'Design', icon: Figma, desc: 'Figma, Adobe XD' },
+  { name: 'DevOps', icon: Terminal, desc: 'Docker, AWS, CI/CD' },
+];
 </script>
 
 <template>
   <div class="container py-5">
-    <div class="row min-h-screen align-items-center">
+    <!-- Hero Section -->
+    <div class="row min-h-screen align-items-center mb-5">
       <div class="col-12 text-center">
-        <h1 class="display-1 fw-bold mb-3">John Doe</h1>
-        <p class="lead mb-4">Full Stack Developer | Creative Coder</p>
+        
+        <!-- Portrait -->
+        <div class="d-inline-block mb-4 p-1 rounded-4 border border-2 border-secondary overflow-hidden position-relative avatar-container">
+          <img :src="portraitUrl" alt="John Doe" class="w-100 h-100 object-fit-cover" />
+        </div>
+
+        <h1 class="display-1 fw-bold mb-3 tracking-tighter">John Doe</h1>
+        <p class="lead mb-4 text-secondary">Full Stack Developer | Creative Coder</p>
         <div class="d-flex justify-content-center gap-3">
-          <button class="btn btn-primary btn-lg">
-             <Camera class="me-2" /> View Work
+          <button class="btn btn-primary btn-lg rounded-pill px-4">
+             <Camera class="me-2 w-5 h-5" /> View Work
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Me Section -->
+    <div class="row justify-content-center py-5">
+      <div class="col-lg-8 text-center">
+        <h2 class="h3 fw-bold mb-4">About Me</h2>
+        <div 
+          v-motion
+          :initial="{ opacity: 0, y: 30 }"
+          :visible="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+        >
+          <p class="lead text-secondary mb-4">
+            Hello! I'm a passionate developer who bridges the gap between engineering and design. 
+            I build accessible, pixel-perfect, and performant web experiences.
+          </p>
+          <p class="text-secondary mb-0">
+            With a background in creative coding and a love for clean aesthetics, I strive to create digital products 
+            that are not only functional but also visually compelling. When I'm not coding, you can find me exploring new coffee shops, 
+            reading sci-fi novels, or tinkering with new tech stacks.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="row justify-content-center py-5">
+      <div class="col-12 mb-4 text-center">
+        <h2 class="h3 fw-bold mb-2">Technical Arsenal</h2>
+        <p class="text-secondary">The tools I use to bring ideas to life</p>
+      </div>
+      
+      <div class="col-lg-10">
+        <div class="row g-3">
+          <div class="col-6 col-md-4" v-for="skill in skills" :key="skill.name">
+            <div 
+              class="card h-100 border-0 shadow-sm skill-card"
+              v-motion
+              :initial="{ opacity: 0, y: 20 }"
+              :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
+            >
+              <div class="card-body p-4 d-flex flex-column align-items-center text-center">
+                <div class="icon-box mb-3 rounded-circle d-flex align-items-center justify-content-center">
+                  <component :is="skill.icon" class="w-6 h-6" />
+                </div>
+                <h5 class="card-title fw-bold mb-1 h6">{{ skill.name }}</h5>
+                <p class="card-text small text-secondary mb-0">{{ skill.desc }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.tracking-tighter {
+  letter-spacing: -0.05em;
+}
+
+.skill-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.avatar-container {
+  width: 200px;
+  height: 280px;
+  background-color: var(--card-bg);
+  transition: transform 0.3s ease;
+}
+
+.avatar-container:hover {
+  transform: scale(1.05);
+}
+</style>
