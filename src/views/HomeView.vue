@@ -83,6 +83,61 @@ const skills = [
         </div>
       </div>
     </div>
+
+    <!-- Experience Section -->
+    <div class="row justify-content-center py-5">
+      <div class="col-12 mb-4 text-center">
+        <h2 class="h3 fw-bold mb-2">My Journey</h2>
+        <p class="text-secondary">Where I've added value alongside great teams</p>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="experience-timeline position-relative">
+          <!-- Timeline Vertical Line -->
+          <div class="timeline-line bg-secondary opacity-25 position-absolute start-0 h-100" style="width: 2px; left: 24px;"></div>
+
+          <!-- Experience Item 1 -->
+          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
+            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
+            <div class="ps-5">
+              <h4 class="h5 fw-bold mb-1">Senior Frontend Engineer</h4>
+              <p class="text-secondary small mb-2">TechCorp Inc. &bull; 2023 - Present</p>
+              <p class="text-muted">
+                Spearheading the migration of legacy monoliths to modern micro-frontends using Vue 3 and TypeScript. 
+                Improved site performance by 40% and established a comprehensive design system.
+              </p>
+            </div>
+          </div>
+
+          <!-- Experience Item 2 -->
+          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
+            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
+            <div class="ps-5">
+              <h4 class="h5 fw-bold mb-1">Full Stack Developer</h4>
+              <p class="text-secondary small mb-2">Creative Agency &bull; 2021 - 2023</p>
+              <p class="text-muted">
+                Developed interactive marketing campaigns for Fortune 500 clients. 
+                Utilized WebGL and GSAP for award-winning visual experiences. Built custom CMS solutions with Python/Django.
+              </p>
+            </div>
+          </div>
+
+          <!-- Experience Item 3 -->
+          <div class="d-flex position-relative" v-motion-slide-visible-once-bottom>
+            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
+            <div class="ps-5">
+              <h4 class="h5 fw-bold mb-1">Junior Web Developer</h4>
+              <p class="text-secondary small mb-2">StartUp Hub &bull; 2019 - 2021</p>
+              <p class="text-muted">
+                Collaborated with cross-functional teams to launch MVP products. 
+                Focused on responsive UI implementation and REST API integration.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
