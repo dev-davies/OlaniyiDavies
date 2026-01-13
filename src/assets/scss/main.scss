@@ -1,0 +1,51 @@
+// 1. Include functions first (so we can manipulate colors)
+@import "bootstrap/scss/functions";
+
+// 2. Override Bootstrap variables
+$primary: #333333; // Dark Grey instead of Blue
+$secondary: #666666;
+$light: #F5F5F0; // Cream
+$dark: #121212; // Soft Black
+
+// 3. Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+:root {
+  // Light Mode Palette (Cream/Minimalist)
+  --bg-color: #F8F8F4;      // Warm Cream
+  --text-color: #1A1A1A;    // Soft Black
+  --dots-color: #E0E0D8;    // Subtle warm grey for dots
+  --card-bg: #FFFFFF;
+  --border-color: #E5E5E0;
+}
+
+[data-bs-theme="dark"] {
+  // Dark Mode Palette (Monochrome)
+  --bg-color: #0F0F0F;      // Deep Soft Black
+  --text-color: #EFEFEF;    // Off-white
+  --dots-color: #262626;    // Dark grey dots
+  --card-bg: #1A1A1A;
+  --border-color: #333333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif; // Ensure clean typography
+}
+
+/* Custom Dot Grid Background */
+.bg-dots {
+  background-image: radial-gradient(var(--dots-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Utilities */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.text-cream { color: #F5F5F0 !important; }
+.bg-cream { background-color: #F8F8F4 !important; }
