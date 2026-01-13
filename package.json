@@ -15,6 +15,7 @@
     "bootstrap": "^5.3.8",
     "lucide-vue-next": "^0.562.0",
     "sass": "^1.97.2",
+    "typed.js": "^2.1.0",
     "vue": "^3.5.24",
     "vue-router": "^4.6.4"
   },

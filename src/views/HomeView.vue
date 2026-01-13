@@ -1,6 +1,56 @@
 <script setup lang="ts">
 import { Camera, Database, Layout, Smartphone, Terminal, Figma, Server } from 'lucide-vue-next';
-import portraitUrl from '@/assets/img/portrait.jpg'; // Import the image
+import portraitUrl from '@/assets/img/portrait.jpg';
+import { onMounted, onUnmounted, ref, nextTick } from 'vue';
+
+const currentChars = ref<string[]>([]);
+const isFadingOut = ref(false); // Controls the flow direction
+const titles = [
+  "I'm Davies Folorunso", 
+  "I'm a Fullstack Developer", 
+  "I'm a Wordpress Developer"
+];
+let currentIndex = 0;
+let timeoutId: number;
+
+const startLoop = () => {
+  // Initialize with first title
+  updateChars(titles[0]);
+
+  const loop = () => {
+    timeoutId = window.setTimeout(() => {
+      // 1. Trigger Fade Out (Flow L -> R)
+      isFadingOut.value = true;
+
+      setTimeout(() => {
+        // 2. Swap Text
+        currentIndex = (currentIndex + 1) % titles.length;
+        updateChars(titles[currentIndex]);
+        
+        // 3. Trigger Fade In (Flow L -> R)
+        isFadingOut.value = false;
+
+        loop(); // Recursion
+      }, 1000); // Wait for full exit animation (approx 1s)
+
+    }, 3500); // Read time
+  };
+  loop();
+};
+
+const updateChars = (text: string) => {
+  // Use a unique separation to ensure Vue re-renders the spans if text changes length or content
+  // Adding spaces ensures layout stability
+  currentChars.value = text.split('');
+};
+
+onMounted(() => {
+  startLoop();
+});
+
+onUnmounted(() => {
+  clearTimeout(timeoutId);
+});
 
 const skills = [
   { name: 'Frontend', icon: Layout, desc: 'Vue, React, TypeScript' },
@@ -20,11 +70,22 @@ const skills = [
         
         <!-- Portrait -->
         <div class="d-inline-block mb-4 p-1 rounded-4 border border-2 border-secondary overflow-hidden position-relative avatar-container">
-          <img :src="portraitUrl" alt="John Doe" class="w-100 h-100 object-fit-cover" />
+          <img :src="portraitUrl" alt="Davies Folorunso" class="w-100 h-100 object-fit-cover" />
         </div>
 
-        <h1 class="display-1 fw-bold mb-3 tracking-tighter">John Doe</h1>
-        <p class="lead mb-4 text-secondary">Full Stack Developer | Creative Coder</p>
+        <div class="mb-4 d-flex align-items-center justify-content-center" style="min-height: 80px;">
+           <h1 class="display-1 fw-bold mb-0 tracking-tighter morph-container">
+             <span 
+               v-for="(char, index) in currentChars" 
+               :key="index"
+               class="morph-char"
+               :class="{ 'out': isFadingOut, 'in': !isFadingOut }"
+               :style="{ '--delay': `${index * 0.03}s` }"
+             >{{ char === ' ' ? '&nbsp;' : char }}</span>
+           </h1>
+        </div>
+        
+        <p class="lead mb-4 text-secondary">Creative Coder | Problem Solver</p>
         <div class="d-flex justify-content-center gap-3">
           <button class="btn btn-primary btn-lg rounded-pill px-4">
              <Camera class="me-2 w-5 h-5" /> View Work
@@ -175,4 +236,32 @@ const skills = [
 .avatar-container:hover {
   transform: scale(1.05);
 }
+
+.morph-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.morph-char {
+  display: inline-block;
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+  transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--delay);
+  will-change: opacity, filter, transform;
+}
+
+/* Exit State: Blur out, move up, scale down */
+.morph-char.out {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(-10px) scale(0.9);
+}
+
+/* Enter Initial State (handled by Vue conditional class swapping, 
+   but we want them to start invisible if we were using v-enter-from.
+   Since we use a persistent list and toggle class 'out', 
+   when 'out' is removed, it transitions back to base state.) */
 </style>
