@@ -2,7 +2,7 @@
 import { Camera, Database, Layout, Smartphone, Terminal, Globe, Server, Github, Linkedin, Mail, MessageCircle, Gamepad2 } from 'lucide-vue-next';
 import portraitUrl from '@/assets/img/portrait.jpg';
 import dattinImg from '@/assets/img/dev-davies.github.io_dattin_.png';
-import { onMounted, onUnmounted, ref, nextTick } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 const currentChars = ref<string[]>([]);
 const isFadingOut = ref(false); // Controls the flow direction
