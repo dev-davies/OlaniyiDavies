@@ -4,7 +4,7 @@ import portraitUrl from '@/assets/img/portrait.jpg';
 import dattinImg from '@/assets/img/dev-davies.github.io_dattin_.png';
 import { onMounted, onUnmounted, ref } from 'vue';
 
-const currentChars = ref<string[]>([]);
+const wordGroups = ref<{ chars: string[]; startIndex: number }[]>([]);
 const isFadingOut = ref(false); // Controls the flow direction
 const titles = [
   "I'm Davies Folorunso", 
@@ -40,9 +40,21 @@ const startLoop = () => {
 };
 
 const updateChars = (text: string) => {
-  // Using separation to ensure Vue re-renders the spans if text changes length or content
-  // Adding spaces ensures layout stability
-  currentChars.value = text.split('');
+  // Split by space to get words
+  const words = text.split(' ');
+  let charCounter = 0;
+  
+  wordGroups.value = words.map(word => {
+    const chars = word.split('');
+    const startIndex = charCounter;
+    // Increment counter by word length + 1 (for the space)
+    charCounter += chars.length + 1;
+    
+    return {
+      chars,
+      startIndex
+    };
+  });
 };
 
 onMounted(() => {
@@ -75,14 +87,20 @@ const skills = [
         </div>
 
         <div class="mb-4 d-flex align-items-center justify-content-center" style="min-height: 80px;">
-           <h1 class="display-1 fw-bold mb-0 tracking-tighter morph-container">
+           <h1 class="display-1 fw-bold mb-0 tracking-tighter morph-container" style="column-gap: 0.3em; row-gap: 0;">
              <span 
-               v-for="(char, index) in currentChars" 
-               :key="index"
-               class="morph-char"
-               :class="{ 'out': isFadingOut, 'in': !isFadingOut }"
-               :style="{ '--delay': `${index * 0.03}s` }"
-             >{{ char === ' ' ? '&nbsp;' : char }}</span>
+               v-for="(group, gIndex) in wordGroups"
+               :key="gIndex"
+               class="d-inline-block text-nowrap"
+             >
+               <span 
+                 v-for="(char, cIndex) in group.chars" 
+                 :key="cIndex"
+                 class="morph-char"
+                 :class="{ 'out': isFadingOut, 'in': !isFadingOut }"
+                 :style="{ '--delay': `${(group.startIndex + cIndex) * 0.03}s` }"
+               >{{ char }}</span>
+             </span>
            </h1>
         </div>
         
