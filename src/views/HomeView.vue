@@ -16,7 +16,7 @@ let timeoutId: number;
 
 const startLoop = () => {
   // Initialize with first title
-  updateChars(titles[0]);
+  updateChars(titles[0] || '');
 
   const loop = () => {
     timeoutId = window.setTimeout(() => {
@@ -26,7 +26,7 @@ const startLoop = () => {
       setTimeout(() => {
         // 2. Swap Text
         currentIndex = (currentIndex + 1) % titles.length;
-        updateChars(titles[currentIndex]);
+        updateChars(titles[currentIndex] || '');
         
         // 3. Trigger Fade In (Flow L -> R)
         isFadingOut.value = false;
