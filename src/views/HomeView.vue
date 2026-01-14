@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Camera, Database, Layout, Smartphone, Terminal, Globe, Server, Github, Linkedin, Mail } from 'lucide-vue-next';
+import { Camera, Database, Layout, Smartphone, Terminal, Globe, Server, Github, Linkedin, Mail, MessageCircle, Gamepad2 } from 'lucide-vue-next';
 import portraitUrl from '@/assets/img/portrait.jpg';
+import dattinImg from '@/assets/img/dev-davies.github.io_dattin_.png';
 import { onMounted, onUnmounted, ref, nextTick } from 'vue';
 
 const currentChars = ref<string[]>([]);
@@ -39,7 +40,7 @@ const startLoop = () => {
 };
 
 const updateChars = (text: string) => {
-  // Use a unique separation to ensure Vue re-renders the spans if text changes length or content
+  // Using separation to ensure Vue re-renders the spans if text changes length or content
   // Adding spaces ensures layout stability
   currentChars.value = text.split('');
 };
@@ -121,6 +122,9 @@ const skills = [
               My approach blends structure and curiosity. 
           I care about clean architecture, reusable components, and interfaces that stay intuitive even as features multiply.
           </p>
+          <p class="text-secondary mb-0 mt-3">
+            When I’m not fixed on a screen, I’m usually dissecting rap lyrics, engaging in some vigorous dancing, enjoying a movie, or getting lost in the pages of a fiction novel. I believe staying curious and creative offline keeps the code sharp online.
+          </p>
         </div>
       </div>
     </div>
@@ -154,6 +158,53 @@ const skills = [
       </div>
     </div>
 
+    <!-- What I have been upto Section -->
+    <div class="row justify-content-center py-5">
+       <div class="col-lg-10">
+          <h2 class="h3 fw-bold mb-4 text-center">What I have been upto</h2>
+          <div 
+            class="card about-card border-0 shadow-sm p-4 p-md-5 overflow-hidden mb-4" 
+            v-motion-slide-visible-once-bottom
+          >
+            <div class="row align-items-center g-5">
+               <div class="col-md-6 order-2 order-md-1">
+                  <div class="d-flex align-items-center gap-2 mb-3">
+                     <Gamepad2 class="w-6 h-6 text-primary" />
+                     <h3 class="h4 fw-bold mb-0">Dat Tin</h3>
+                  </div>
+                  <p class="text-secondary mb-4">
+                     A Nigerian-themed taboo game that celebrates local culture. 
+                     Progressive Web App (PWA) with offline support and installability.
+                  </p>
+                  
+                  <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-secondary border fw-normal">Vue.js</span>
+                    <span class="badge bg-light text-secondary border fw-normal">PWA</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Game Logic</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Touch Events</span>
+                  </div>
+
+                  <a href="https://dev-davies.github.io/dattin/" target="_blank" class="btn btn-primary rounded-pill px-4">
+                      View Project
+                  </a>
+               </div>
+               <div class="col-md-6 order-1 order-md-2">
+                  <div class="rounded-4 overflow-hidden shadow-sm position-relative">
+                     <img :src="dattinImg" alt="Dat Tin Game" class="img-fluid w-100 object-fit-cover" />
+                  </div>
+               </div>
+            </div>
+          </div>
+          
+          <div class="text-center" v-motion-fade-visible-once>
+             <RouterLink to="/projects" class="btn btn-outline-secondary rounded-pill px-5 btn-lg">
+                View More Projects
+             </RouterLink>
+          </div>
+
+       </div>
+    </div>
+
     <!-- Experience Section -->
     <div class="row justify-content-center py-5">
       <div class="col-12 mb-4 text-center">
@@ -166,41 +217,41 @@ const skills = [
           <!-- Timeline Vertical Line -->
           <div class="timeline-line bg-secondary opacity-25 position-absolute start-0 h-100" style="width: 2px; left: 24px;"></div>
 
-          <!-- Experience Item 1 -->
-          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
-            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
-            <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">Senior Frontend Engineer</h4>
-              <p class="text-secondary small mb-2">TechCorp Inc. &bull; 2023 - Present</p>
-              <p class="text-muted">
-                Spearheading the migration of legacy monoliths to modern micro-frontends using Vue 3 and TypeScript. 
-                Improved site performance by 40% and established a comprehensive design system.
-              </p>
-            </div>
-          </div>
-
-          <!-- Experience Item 2 -->
+          <!-- Experience Item 1 (Novel Integrated Services) -->
           <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
             <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
             <div class="ps-5">
               <h4 class="h5 fw-bold mb-1">Full Stack Developer</h4>
-              <p class="text-secondary small mb-2">Creative Agency &bull; 2021 - 2023</p>
+              <p class="text-secondary small mb-2">Novel Integrated Services Limited &bull; Nov 2025 - Present</p>
               <p class="text-muted">
-                Developed interactive marketing campaigns for Fortune 500 clients. 
-                Utilized WebGL and GSAP for award-winning visual experiences. Built custom CMS solutions with Python/Django.
+                Leading the management of high-traffic e-commerce platforms and architecting custom internal solutions. 
+                Leveraging Python (Flask) and modern JavaScript to drive operational efficiency.
               </p>
             </div>
           </div>
 
-          <!-- Experience Item 3 -->
+          <!-- Experience Item 2 (Freelance) -->
+          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
+            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
+            <div class="ps-5">
+              <h4 class="h5 fw-bold mb-1">Freelance Full Stack Developer</h4>
+              <p class="text-secondary small mb-2">Self-Employed &bull; Jan 2022 - Nov 2025</p>
+              <p class="text-muted">
+                Delivered tailored digital solutions for SMEs and financial institutions. 
+                Specialized in building secure, scalable web applications using PHP (Laravel), HTML, CSS, and JavaScript.
+              </p>
+            </div>
+          </div>
+
+          <!-- Experience Item 3 (Leadnicely) -->
           <div class="d-flex position-relative" v-motion-slide-visible-once-bottom>
             <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
             <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">Junior Web Developer</h4>
-              <p class="text-secondary small mb-2">StartUp Hub &bull; 2019 - 2021</p>
+              <h4 class="h5 fw-bold mb-1">Web Developer Intern</h4>
+              <p class="text-secondary small mb-2">Leadnicely Inc. (Florida, Remote) &bull; Mar 2021 - Dec 2021</p>
               <p class="text-muted">
-                Collaborated with cross-functional teams to launch MVP products. 
-                Focused on responsive UI implementation and REST API integration.
+                Collaborated with a remote international team to build dynamic WordPress websites. 
+                Mastered Elementor and custom theme integration to deliver pixel-perfect client projects.
               </p>
             </div>
           </div>
@@ -232,6 +283,11 @@ const skills = [
            <a href="mailto:dvsfolorunso@gmail.com" class="text-decoration-none text-secondary social-link">
              <Mail class="w-8 h-8" />
              <span class="d-block small mt-2">Email</span>
+           </a>
+
+           <a href="https://wa.me/2348168171961" target="_blank" class="text-decoration-none text-secondary social-link">
+             <MessageCircle class="w-8 h-8" />
+             <span class="d-block small mt-2">WhatsApp</span>
            </a>
 
         </div>

@@ -25,7 +25,7 @@ const projects = ref<Project[]>([
   {
     id: 1,
     title: 'Dat Tin',
-    description: 'A Nigerian-themed charades/party game that celebrates local culture. Progressive Web App (PWA) with offline support and installability.',
+    description: 'A Nigerian-themed taboo game that celebrates local culture. Progressive Web App (PWA) with offline support and installability.',
     image: dattinImg,
     tags: ['Vue.js', 'PWA', 'Game Logic', 'Touch Events'],
     link: 'https://dev-davies.github.io/dattin/',
