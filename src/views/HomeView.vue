@@ -84,27 +84,46 @@ onUnmounted(() => {
 const skills = [
   { 
     name: 'Frontend', 
-    icons: [htmlIcon, cssIcon, bootstrapIcon, vuejsIcon], 
+    icons: [
+      { src: htmlIcon, name: 'HTML' },
+      { src: cssIcon, name: 'CSS' },
+      { src: bootstrapIcon, name: 'Bootstrap' },
+      { src: vuejsIcon, name: 'Vue.js' }
+    ], 
     desc: 'HTML, CSS, Bootstrap, Vue.js' 
   },
   { 
     name: 'Backend', 
-    icons: [phpIcon, laravelIcon, pythonIcon, flaskIcon], 
+    icons: [
+      { src: phpIcon, name: 'PHP' },
+      { src: laravelIcon, name: 'Laravel' },
+      { src: pythonIcon, name: 'Python' },
+      { src: flaskIcon, name: 'Flask' }
+    ], 
     desc: 'PHP (Laravel), Python (Flask)' 
   },
   { 
     name: 'Database', 
-    icons: [postgresqlIcon, sqliteIcon], 
+    icons: [
+      { src: postgresqlIcon, name: 'PostgreSQL' },
+      { src: sqliteIcon, name: 'SQLite' }
+    ], 
     desc: 'PostgreSQL, SQLite' 
   },
   { 
     name: 'DevOps', 
-    icons: [pwaIcon, dockerIcon], 
+    icons: [
+      { src: pwaIcon, name: 'PWA' },
+      { src: dockerIcon, name: 'Docker' }
+    ], 
     desc: 'PWA, Docker' 
   },
   { 
     name: 'WordPress', 
-    icons: [wordpressIcon, elementorIcon], 
+    icons: [
+      { src: wordpressIcon, name: 'WordPress' },
+      { src: elementorIcon, name: 'Elementor' }
+    ], 
     desc: 'CMS & Page Builder' 
   },
 ];
@@ -190,26 +209,30 @@ const skills = [
       </div>
       
       <div class="col-lg-10">
-        <div class="row g-3">
-          <div class="col-6 col-md-4" v-for="skill in skills" :key="skill.name">
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-lg-4" v-for="skill in skills" :key="skill.name">
             <div 
               class="card h-100 border-0 shadow-sm skill-card"
               v-motion
               :initial="{ opacity: 0, y: 20 }"
               :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
             >
-              <div class="card-body p-4 d-flex flex-column align-items-center text-center">
-                <div class="icons-row mb-3 d-flex align-items-center justify-content-center gap-2 flex-wrap">
-                  <img 
+              <div class="card-body p-5 d-flex flex-column align-items-center text-center">
+                <h5 class="card-title fw-bold mb-4 h5">{{ skill.name }}</h5>
+                <div class="icons-grid mb-3">
+                  <div 
                     v-for="(icon, index) in skill.icons" 
                     :key="index"
-                    :src="icon" 
-                    :alt="`${skill.name} technology`" 
-                    class="tech-icon" 
-                  />
+                    class="icon-item"
+                  >
+                    <img 
+                      :src="icon.src" 
+                      :alt="icon.name" 
+                      class="tech-icon mb-2" 
+                    />
+                    <span class="tech-name">{{ icon.name }}</span>
+                  </div>
                 </div>
-                <h5 class="card-title fw-bold mb-1 h6">{{ skill.name }}</h5>
-                <p class="card-text small text-secondary mb-0">{{ skill.desc }}</p>
               </div>
             </div>
           </div>
@@ -369,6 +392,7 @@ const skills = [
   background-color: var(--card-bg);
   border: 1px solid var(--border-color) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 320px;
 }
 
 .skill-card:hover {
@@ -376,13 +400,26 @@ const skills = [
   box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
 }
 
-.icons-row {
-  min-height: 48px;
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  justify-items: center;
+  align-items: start;
+  width: 100%;
+  max-width: 280px;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .tech-icon {
-  width: 36px;
-  height: 36px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   /* Grayscale by default */
   filter: grayscale(100%) brightness(1.2);
@@ -390,6 +427,14 @@ const skills = [
   /* Optimize rendering */
   will-change: filter, transform;
   backface-visibility: hidden;
+}
+
+.tech-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* Full color on hover */
