@@ -226,14 +226,14 @@ const checkMouseIdle = () => {
 const initParticles = () => {
   particles.length = 0
   
-  // Dynamic Count Logic:
-  // 1. Dark Mode: Always 1200 (Stars) - Doubled from 600
+  // Dynamic Count Logic - Optimized for Performance:
+  // 1. Dark Mode: 500 (Stars) - Balanced for performance
   // 2. Light Mode: 
-  //    - Desktop: 7200 (Dust Storm) - Doubled from 3600
-  //    - Mobile (<768px): 2400 (Light Dust) - Doubled from 1200
-  let count = 1200
+  //    - Desktop: 3000 (Dust Storm) - Reduced for smooth animation
+  //    - Mobile (<768px): 1000 (Light Dust) - Performance friendly
+  let count = 500
   if (!isDark.value) {
-    count = width.value < 768 ? 2400 : 7200
+    count = width.value < 768 ? 1000 : 3000
   }
   
   for (let i = 0; i < count; i++) {
