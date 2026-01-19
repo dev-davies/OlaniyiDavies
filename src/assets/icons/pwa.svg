@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="pwa-gradient" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#5A0FC8"/>
+      <stop offset="100%" stop-color="#3F0B94"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#pwa-gradient)" rx="28"/>
+  <path fill="#FFF" d="M128 48c-44.183 0-80 35.817-80 80s35.817 80 80 80 80-35.817 80-80-35.817-80-80-80zm0 144c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.654 64-64 64z"/>
+  <path fill="#FFF" d="m96 96 32 64 32-64H96z"/>
+  <path fill="#FFF" d="M80 164h96v16H80z"/>
+</svg>

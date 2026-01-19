@@ -1,8 +1,24 @@
 <script setup lang="ts">
-import { Camera, Database, Layout, Smartphone, Terminal, Globe, Server, Github, Linkedin, Mail, MessageCircle, Gamepad2 } from 'lucide-vue-next';
+import { Camera, Github, Linkedin, Mail, MessageCircle, Gamepad2 } from 'lucide-vue-next';
 import portraitUrl from '@/assets/img/portrait.jpg';
 import dattinImg from '@/assets/img/dev-davies.github.io_dattin_.png';
 import { onMounted, onUnmounted, ref } from 'vue';
+
+// Import tech stack icons
+import htmlIcon from '@/assets/icons/html.svg';
+import cssIcon from '@/assets/icons/css.svg';
+import bootstrapIcon from '@/assets/icons/bootstrap.svg';
+import vuejsIcon from '@/assets/icons/vuejs.svg';
+import phpIcon from '@/assets/icons/php.svg';
+import laravelIcon from '@/assets/icons/laravel.svg';
+import pythonIcon from '@/assets/icons/python.svg';
+import flaskIcon from '@/assets/icons/flask.svg';
+import postgresqlIcon from '@/assets/icons/postgresql.svg';
+import sqliteIcon from '@/assets/icons/sqlite.svg';
+import pwaIcon from '@/assets/icons/pwa.svg';
+import dockerIcon from '@/assets/icons/docker.svg';
+import wordpressIcon from '@/assets/icons/wordpress.svg';
+import elementorIcon from '@/assets/icons/elementor.svg';
 
 const wordGroups = ref<{ chars: string[]; startIndex: number }[]>([]);
 const isFadingOut = ref(false); // Controls the flow direction
@@ -66,12 +82,31 @@ onUnmounted(() => {
 });
 
 const skills = [
-  { name: 'Frontend', icon: Layout, desc: 'HTML, CSS, Bootstrap, Vue.js' },
-  { name: 'Backend', icon: Server, desc: 'PHP (Laravel), Python (Flask)' },
-  { name: 'Database', icon: Database, desc: 'PostgreSQL, SQLite' },
-  { name: 'Mobile', icon: Smartphone, desc: 'PWA' },
-  { name: 'DevOps', icon: Terminal, desc: 'Docker' },
-  { name: 'WordPress', icon: Globe, desc: 'Elementor' },
+  { 
+    name: 'Frontend', 
+    icons: [htmlIcon, cssIcon, bootstrapIcon, vuejsIcon], 
+    desc: 'HTML, CSS, Bootstrap, Vue.js' 
+  },
+  { 
+    name: 'Backend', 
+    icons: [phpIcon, laravelIcon, pythonIcon, flaskIcon], 
+    desc: 'PHP (Laravel), Python (Flask)' 
+  },
+  { 
+    name: 'Database', 
+    icons: [postgresqlIcon, sqliteIcon], 
+    desc: 'PostgreSQL, SQLite' 
+  },
+  { 
+    name: 'DevOps', 
+    icons: [pwaIcon, dockerIcon], 
+    desc: 'PWA, Docker' 
+  },
+  { 
+    name: 'WordPress', 
+    icons: [wordpressIcon, elementorIcon], 
+    desc: 'CMS & Page Builder' 
+  },
 ];
 </script>
 
@@ -128,11 +163,11 @@ const skills = [
           :initial="{ opacity: 0, y: 30 }"
           :visible="{ opacity: 1, y: 0, transition: { duration: 600 } }"
         >
-          <p class="lead text-secondary mb-4">
+          <p class="lead text-secondary mb-4 mx-auto" style="max-width: 700px;">
             Hello! I'm a passionate developer who bridges the gap between engineering and design. 
             I build accessible, pixel-perfect, and performant web experiences.
           </p>
-          <p class="text-secondary mb-0">
+          <p class="text-secondary mb-0 mx-auto" style="max-width: 700px;">
             Hi — I'm Davies, a developer based in Nigeria. I specialise in building maintainable web apps with a focus on usability, 
             accessibility, and a little personality. I’m a developer who enjoys turning ideas into digital products that
              don’t panic when they grow. I build projects with scale in mind from sleek landing pages that load fast and convert quietly, 
@@ -140,7 +175,7 @@ const skills = [
               My approach blends structure and curiosity. 
           I care about clean architecture, reusable components, and interfaces that stay intuitive even as features multiply.
           </p>
-          <p class="text-secondary mb-0 mt-3">
+          <p class="text-secondary mb-0 mt-3 mx-auto" style="max-width: 700px;">
             When I’m not fixed on a screen, I’m usually dissecting rap lyrics, engaging in some vigorous dancing, enjoying a movie, or getting lost in the pages of a fiction novel. I believe staying curious and creative offline keeps the code sharp online.
           </p>
         </div>
@@ -164,8 +199,14 @@ const skills = [
               :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
             >
               <div class="card-body p-4 d-flex flex-column align-items-center text-center">
-                <div class="icon-box mb-3 rounded-circle d-flex align-items-center justify-content-center">
-                  <component :is="skill.icon" class="w-6 h-6" />
+                <div class="icons-row mb-3 d-flex align-items-center justify-content-center gap-2 flex-wrap">
+                  <img 
+                    v-for="(icon, index) in skill.icons" 
+                    :key="index"
+                    :src="icon" 
+                    :alt="`${skill.name} technology`" 
+                    class="tech-icon" 
+                  />
                 </div>
                 <h5 class="card-title fw-bold mb-1 h6">{{ skill.name }}</h5>
                 <p class="card-text small text-secondary mb-0">{{ skill.desc }}</p>
@@ -335,12 +376,35 @@ const skills = [
   box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important;
 }
 
-.icon-box {
-  width: 48px;
-  height: 48px;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+.icons-row {
+  min-height: 48px;
+}
+
+.tech-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  /* Grayscale by default */
+  filter: grayscale(100%) brightness(1.2);
+  transition: filter 0.3s ease, transform 0.3s ease;
+  /* Optimize rendering */
+  will-change: filter, transform;
+  backface-visibility: hidden;
+}
+
+/* Full color on hover */
+.skill-card:hover .tech-icon {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
+}
+
+/* Dark theme adjustments */
+[data-bs-theme="dark"] .tech-icon {
+  filter: grayscale(100%) brightness(0.8) invert(1);
+}
+
+[data-bs-theme="dark"] .skill-card:hover .tech-icon {
+  filter: grayscale(0%) brightness(1) invert(0);
 }
 
 .avatar-container {

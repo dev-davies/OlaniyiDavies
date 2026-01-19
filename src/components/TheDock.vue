@@ -79,6 +79,12 @@ const dockItems = [
 .icon-size {
   width: 24px;
   height: 24px;
+  /* Optimize rendering during scale transforms */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  /* Force sharp edges on SVG */
+  shape-rendering: geometricPrecision;
 }
 
 @media (max-width: 768px) {
