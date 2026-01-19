@@ -38,6 +38,7 @@ interface Particle {
   twinkleSpeed: number; // Speed of twinkling
   targetX?: number;     // Target position for formation
   targetY?: number;
+  isFormationParticle?: boolean; // Whether this particle is part of the shape
 }
 
 const particles: Particle[] = []
@@ -187,6 +188,12 @@ const checkMouseIdle = () => {
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
     if (randomShape) {
       shapeFormationPoints.value = randomShape.generator(mouseX.value, mouseY.value)
+      
+      // Assign formation status to only a subset of particles (every 3rd particle)
+      // This leaves 2/3 of particles free to continue normal behavior
+      particles.forEach((p, index) => {
+        p.isFormationParticle = index % 3 === 0
+      })
     }
   }
   
@@ -205,6 +212,12 @@ const checkMouseIdle = () => {
       shapeFormationPoints.value = []
       pulseCount.value = 0
       pulsePhase.value = 0
+      // Reset all formation flags
+      particles.forEach(p => {
+        p.isFormationParticle = false
+        p.targetX = undefined
+        p.targetY = undefined
+      })
     }
   }
 }
@@ -279,8 +292,8 @@ const animate = () => {
       p.opacity = 0.6 // Consistent solid look in Light Mode
     }
 
-    // 3. Shape Formation Mode
-    if (isMouseIdle.value && shapeFormationPoints.value.length > 0) {
+    // 3. Shape Formation Mode (only for designated particles)
+    if (isMouseIdle.value && shapeFormationPoints.value.length > 0 && p.isFormationParticle) {
       // Assign target point if not already assigned
       if (p.targetX === undefined || p.targetY === undefined) {
         const targetPoint = shapeFormationPoints.value[index % shapeFormationPoints.value.length]
@@ -308,7 +321,7 @@ const animate = () => {
         }
       }
     } else {
-      // 3b. Regular Attraction Logic (Mouse & Touch)
+      // 3b. Regular Attraction Logic (Mouse & Touch) - for non-formation particles
       p.targetX = undefined
       p.targetY = undefined
       
@@ -316,7 +329,8 @@ const animate = () => {
       if (distance < forceDistance) {
         const force = (forceDistance - distance) / forceDistance
         const angle = Math.atan2(dy, dx)
-        const moveStrength = 1.5 // Increased from 0.8 for much stronger/faster attraction
+        // Extra boost for non-formation particles during shape mode
+        const moveStrength = (isMouseIdle.value && shapeFormationPoints.value.length > 0) ? 2.5 : 1.5
         
         p.vx += Math.cos(angle) * force * moveStrength
         p.vy += Math.sin(angle) * force * moveStrength
@@ -330,9 +344,10 @@ const animate = () => {
       p.vx = (p.vx / speed) * maxSpeed
       p.vy = (p.vy / speed) * maxSpeed
     } else if (!isMouseIdle.value && distance > 200 && speed > 0.2) {
-        // Stronger friction to return to "drift" state
-        p.vx *= 0.95
-        p.vy *= 0.95
+        // Less friction for non-formation particles during shape mode
+        const frictionMultiplier = (isMouseIdle.value && !p.isFormationParticle) ? 0.98 : 0.95
+        p.vx *= frictionMultiplier
+        p.vy *= frictionMultiplier
     }
 
     // 5. Move
