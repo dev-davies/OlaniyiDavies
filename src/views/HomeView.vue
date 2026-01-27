@@ -1,132 +1,17 @@
 <script setup lang="ts">
-import { Camera, Github, Linkedin, Mail, MessageCircle, Gamepad2 } from 'lucide-vue-next';
-import portraitUrl from '@/assets/img/portrait.jpg';
-import dattinImg from '@/assets/img/dev-davies.github.io_dattin_.png';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { Camera, Github, Linkedin, Mail, MessageCircle, Gamepad2, Download } from 'lucide-vue-next';
+import portraitUrl from '@/assets/images/portrait.jpg';
+import dattinImg from '@/assets/images/projects/dev-davies.github.io_dattin_.png';
 
-// Import tech stack icons
-import htmlIcon from '@/assets/icons/html.svg';
-import cssIcon from '@/assets/icons/css.svg';
-import bootstrapIcon from '@/assets/icons/bootstrap.svg';
-import vuejsIcon from '@/assets/icons/vuejs.svg';
-import phpIcon from '@/assets/icons/php.svg';
-import laravelIcon from '@/assets/icons/laravel.svg';
-import pythonIcon from '@/assets/icons/python.svg';
-import flaskIcon from '@/assets/icons/flask.svg';
-import postgresqlIcon from '@/assets/icons/postgresql.svg';
-import sqliteIcon from '@/assets/icons/sqlite.svg';
-import pwaIcon from '@/assets/icons/pwa.svg';
-import dockerIcon from '@/assets/icons/docker.svg';
-import wordpressIcon from '@/assets/icons/wordpress.svg';
-import elementorIcon from '@/assets/icons/elementor.svg';
+// Import constants
+import { skills } from '@/constants/skills';
+import { personal } from '@/constants/personal';
 
-const wordGroups = ref<{ chars: string[]; startIndex: number }[]>([]);
-const isFadingOut = ref(false); // Controls the flow direction
-const titles = [
-  "I'm Davies Folorunso", 
-  "I'm a Fullstack Developer", 
-  "I'm a Wordpress Developer"
-];
-let currentIndex = 0;
-let timeoutId: number;
+// Import composables
+import { useTextMorph } from '@/composables/useTextMorph';
 
-const startLoop = () => {
-  // Initialize with first title
-  updateChars(titles[0] || '');
-
-  const loop = () => {
-    timeoutId = window.setTimeout(() => {
-      // 1. Trigger Fade Out (Flow L -> R)
-      isFadingOut.value = true;
-
-      setTimeout(() => {
-        // 2. Swap Text
-        currentIndex = (currentIndex + 1) % titles.length;
-        updateChars(titles[currentIndex] || '');
-        
-        // 3. Trigger Fade In (Flow L -> R)
-        isFadingOut.value = false;
-
-        loop(); // Recursion
-      }, 1000); // Wait for full exit animation (approx 1s)
-
-    }, 3500); // Read time
-  };
-  loop();
-};
-
-const updateChars = (text: string) => {
-  // Split by space to get words
-  const words = text.split(' ');
-  let charCounter = 0;
-  
-  wordGroups.value = words.map(word => {
-    const chars = word.split('');
-    const startIndex = charCounter;
-    // Increment counter by word length + 1 (for the space)
-    charCounter += chars.length + 1;
-    
-    return {
-      chars,
-      startIndex
-    };
-  });
-};
-
-onMounted(() => {
-  startLoop();
-});
-
-onUnmounted(() => {
-  clearTimeout(timeoutId);
-});
-
-const skills = [
-  { 
-    name: 'Frontend', 
-    icons: [
-      { src: htmlIcon, name: 'HTML' },
-      { src: cssIcon, name: 'CSS' },
-      { src: bootstrapIcon, name: 'Bootstrap' },
-      { src: vuejsIcon, name: 'Vue.js' }
-    ], 
-    desc: 'HTML, CSS, Bootstrap, Vue.js' 
-  },
-  { 
-    name: 'Backend', 
-    icons: [
-      { src: phpIcon, name: 'PHP' },
-      { src: laravelIcon, name: 'Laravel' },
-      { src: pythonIcon, name: 'Python' },
-      { src: flaskIcon, name: 'Flask' }
-    ], 
-    desc: 'PHP (Laravel), Python (Flask)' 
-  },
-  { 
-    name: 'Database', 
-    icons: [
-      { src: postgresqlIcon, name: 'PostgreSQL' },
-      { src: sqliteIcon, name: 'SQLite' }
-    ], 
-    desc: 'PostgreSQL, SQLite' 
-  },
-  { 
-    name: 'DevOps', 
-    icons: [
-      { src: pwaIcon, name: 'PWA' },
-      { src: dockerIcon, name: 'Docker' }
-    ], 
-    desc: 'PWA, Docker' 
-  },
-  { 
-    name: 'WordPress', 
-    icons: [
-      { src: wordpressIcon, name: 'WordPress' },
-      { src: elementorIcon, name: 'Elementor' }
-    ], 
-    desc: 'CMS & Page Builder' 
-  },
-];
+// Use text morphing composable
+const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
 </script>
 
 <template>
@@ -159,13 +44,16 @@ const skills = [
         </div>
         
         <p class="lead mb-5 text-secondary mx-auto" style="max-width: 700px; line-height: 1.6;">
-          I design and build clean, responsive web experiences where clarity comes first and complexity stays politely behind the curtain. Every pixel has a job, every interaction a purpose. This is a space for thoughtful front-end craftsmanship.
+          {{ personal.tagline }}
         </p>
-        <div class="d-flex justify-content-center gap-3">
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
           <RouterLink to="/projects" class="btn btn-primary btn-lg rounded-pill px-4">
              <Camera class="me-2 w-5 h-5" /> View Work
           </RouterLink>
-          <a href="mailto:dvsfolorunso@gmail.com" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+          <a href="/documents/Davies_Folorunso_CV.pdf" download="Davies_Folorunso_CV.pdf" class="btn btn-outline-dark btn-lg rounded-pill px-4 cv-download-btn">
+             <Download class="me-2 w-5 h-5" /> Download CV
+          </a>
+          <a :href="`mailto:${personal.email}`" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
              Contact Me
           </a>
         </div>
@@ -183,19 +71,13 @@ const skills = [
           :visible="{ opacity: 1, y: 0, transition: { duration: 600 } }"
         >
           <p class="lead text-secondary mb-4 mx-auto" style="max-width: 700px;">
-            Hello! I'm a passionate developer who bridges the gap between engineering and design. 
-            I build accessible, pixel-perfect, and performant web experiences.
+            {{ personal.about.intro }}
           </p>
           <p class="text-secondary mb-0 mx-auto" style="max-width: 700px;">
-            Hi — I'm Davies, a developer based in Nigeria. I specialise in building maintainable web apps with a focus on usability, 
-            accessibility, and a little personality. I’m a developer who enjoys turning ideas into digital products that
-             don’t panic when they grow. I build projects with scale in mind from sleek landing pages that load fast and convert quietly, 
-             to full-blown web applications and ecommerce platforms designed to handle real users doing real things.
-              My approach blends structure and curiosity. 
-          I care about clean architecture, reusable components, and interfaces that stay intuitive even as features multiply.
+            {{ personal.about.description }}
           </p>
           <p class="text-secondary mb-0 mt-3 mx-auto" style="max-width: 700px;">
-            When I’m not fixed on a screen, I’m usually dissecting rap lyrics, engaging in some vigorous dancing, enjoying a movie, or getting lost in the pages of a fiction novel. I believe staying curious and creative offline keeps the code sharp online.
+            {{ personal.about.interests }}
           </p>
         </div>
       </div>
@@ -300,41 +182,18 @@ const skills = [
           <div class="timeline-line bg-secondary opacity-25 position-absolute start-0 h-100" style="width: 2px; left: 24px;"></div>
 
           <!-- Experience Item 1 (Novel Integrated Services) -->
-          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
+          <div 
+            v-for="(exp, index) in personal.experience" 
+            :key="index"
+            class="d-flex position-relative" 
+            :class="{ 'mb-5': index < personal.experience.length - 1 }"
+            v-motion-slide-visible-once-bottom
+          >
             <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
             <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">Full Stack Developer</h4>
-              <p class="text-secondary small mb-2">Novel Integrated Services Limited &bull; Nov 2025 - Present</p>
-              <p class="text-muted">
-                Leading the management of high-traffic e-commerce platforms and architecting custom internal solutions. 
-                Leveraging Python (Flask) and modern JavaScript to drive operational efficiency.
-              </p>
-            </div>
-          </div>
-
-          <!-- Experience Item 2 (Freelance) -->
-          <div class="d-flex mb-5 position-relative" v-motion-slide-visible-once-bottom>
-            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
-            <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">Freelance Full Stack Developer</h4>
-              <p class="text-secondary small mb-2">Self-Employed &bull; Jan 2022 - Nov 2025</p>
-              <p class="text-muted">
-                Delivered tailored digital solutions for SMEs and financial institutions. 
-                Specialized in building secure, scalable web applications using PHP (Laravel), HTML, CSS, and JavaScript.
-              </p>
-            </div>
-          </div>
-
-          <!-- Experience Item 3 (Leadnicely) -->
-          <div class="d-flex position-relative" v-motion-slide-visible-once-bottom>
-            <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
-            <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">Web Developer Intern</h4>
-              <p class="text-secondary small mb-2">Leadnicely Inc. (Florida, Remote) &bull; Mar 2021 - Dec 2021</p>
-              <p class="text-muted">
-                Collaborated with a remote international team to build dynamic WordPress websites. 
-                Mastered Elementor and custom theme integration to deliver pixel-perfect client projects.
-              </p>
+              <h4 class="h5 fw-bold mb-1">{{ exp.title }}</h4>
+              <p class="text-secondary small mb-2">{{ exp.company }} &bull; {{ exp.period }}</p>
+              <p class="text-muted">{{ exp.description }}</p>
             </div>
           </div>
 
@@ -352,22 +211,22 @@ const skills = [
 
         <div class="d-flex justify-content-center gap-4 mb-4">
            
-           <a href="https://github.com/dev-davies/" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.github" target="_blank" class="text-decoration-none text-secondary social-link">
              <Github class="w-8 h-8" />
              <span class="d-block small mt-2">GitHub</span>
            </a>
 
-           <a href="https://www.linkedin.com/in/davies-folorunso-sentinel/" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.linkedin" target="_blank" class="text-decoration-none text-secondary social-link">
              <Linkedin class="w-8 h-8" />
              <span class="d-block small mt-2">LinkedIn</span>
            </a>
 
-           <a href="mailto:dvsfolorunso@gmail.com" class="text-decoration-none text-secondary social-link">
+           <a :href="`mailto:${personal.email}`" class="text-decoration-none text-secondary social-link">
              <Mail class="w-8 h-8" />
              <span class="d-block small mt-2">Email</span>
            </a>
 
-           <a href="https://wa.me/2348168171961" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.whatsapp" target="_blank" class="text-decoration-none text-secondary social-link">
              <MessageCircle class="w-8 h-8" />
              <span class="d-block small mt-2">WhatsApp</span>
            </a>
@@ -538,5 +397,23 @@ const skills = [
 [data-bs-theme="dark"] .about-card:hover {
   border-color: rgba(255,255,255,0.3) !important;
   box-shadow: 0 20px 40px rgba(255,255,255,0.05) !important; /* White glow */
+}
+
+/* Download CV Button - Theme Adaptive */
+.cv-download-btn {
+  border-width: 2px !important;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode - Light outline with light text */
+[data-bs-theme="dark"] .cv-download-btn {
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-bs-theme="dark"] .cv-download-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  color: #fff !important;
 }
 </style>

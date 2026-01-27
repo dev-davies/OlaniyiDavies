@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import TheDock from './components/TheDock.vue'
-import GridBackground from './components/GridBackground.vue'
+import TheDock from './components/layout/TheDock.vue'
+import GridBackground from './components/ui/GridBackground.vue'
 </script>
 
 <template>
