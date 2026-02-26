@@ -7,6 +7,7 @@ import novelSolarImg from '@/assets/images/projects/novelsolar.com_.png';
 import primePayImg from '@/assets/images/projects/www.prime-pay.africa_.png';
 import zitraImg from '@/assets/images/projects/www.zitrainvestments.com_.png';
 import academyImg from '@/assets/images/projects/Novelsolar Academy.png';
+import solarProductExchangeImg from '@/assets/images/projects/solarproductexchange.com.png';
 
 export const projects: Project[] = [
   {
@@ -47,11 +48,21 @@ export const projects: Project[] = [
   },
   {
     id: 5,
-    title: 'NovelSolar Academy',
-    description: 'An upcoming energy and tech training academy platform. Empowering the next generation of solar engineers and tech talent.',
+    title: 'Novel Academy',
+    description: 'An energy and tech training academy platform. Empowering the next generation of solar engineers and tech talent. LMS currently in development.',
     image: academyImg,
-    tags: ['EdTech', 'LMS', 'Training', 'Coming Soon'],
-    status: 'In Development',
+    tags: ['Vue.js', 'Flask', 'EdTech', 'LMS', 'Training'],
+    link: 'https://novel-academy.com',
+    status: 'LMS In Development',
     icon: GraduationCap
+  },
+  {
+    id: 6,
+    title: 'Solar Product Exchange',
+    description: 'E-commerce platform for premium, tested Tokunbo solar batteries and inverters, offering affordable 24/7 power solutions.',
+    image: solarProductExchangeImg,
+    tags: ['E-commerce', 'Nuxt 3', 'Vue.js', 'Headless WP'],
+    link: 'https://solarproductexchange.com',
+    icon: Zap
   }
 ];
