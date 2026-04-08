@@ -1,5 +1,5 @@
 import type { Project } from '@/types/project';
-import { Zap, CreditCard, Gamepad2, GraduationCap, TrendingUp } from 'lucide-vue-next';
+import { Zap, CreditCard, Gamepad2, GraduationCap, TrendingUp, QrCode } from 'lucide-vue-next';
 
 // Import Project Images
 import dattinImg from '@/assets/images/projects/dev-davies.github.io_dattin_.png';
@@ -8,8 +8,18 @@ import primePayImg from '@/assets/images/projects/www.prime-pay.africa_.png';
 import zitraImg from '@/assets/images/projects/www.zitrainvestments.com_.png';
 import academyImg from '@/assets/images/projects/Novelsolar Academy.png';
 import solarProductExchangeImg from '@/assets/images/projects/solarproductexchange.com.png';
+import qrgodImg from '@/assets/images/projects/qrgod.png';
 
 export const projects: Project[] = [
+  {
+    id: 7,
+    title: 'QR God',
+    description: 'Dynamic, full-stack QR Code Generator. Features URL shortening, auto-expiring hosted messages, custom colors, and smart logo embedding.',
+    image: qrgodImg,
+    tags: ['Nuxt 3', 'Tailwind CSS', 'Redis', 'Serverless'],
+    link: 'https://qrgod.vercel.app',
+    icon: QrCode
+  },
   {
     id: 1,
     title: 'Dat Tin',

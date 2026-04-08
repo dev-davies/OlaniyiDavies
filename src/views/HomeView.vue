@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Camera, Github, Linkedin, Mail, MessageCircle, Gamepad2, Download } from 'lucide-vue-next';
+import { Camera, Github, Linkedin, Mail, MessageCircle, QrCode, Download } from 'lucide-vue-next';
 import portraitUrl from '@/assets/images/portrait.jpg';
-import dattinImg from '@/assets/images/projects/dev-davies.github.io_dattin_.png';
+import qrgodImg from '@/assets/images/projects/qrgod.png';
 
 // Import constants
 import { skills } from '@/constants/skills';
@@ -133,28 +133,28 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
             <div class="row align-items-center g-5">
                <div class="col-md-6 order-2 order-md-1">
                   <div class="d-flex align-items-center gap-2 mb-3">
-                     <Gamepad2 class="w-6 h-6 text-primary" />
-                     <h3 class="h4 fw-bold mb-0">Dat Tin</h3>
+                     <QrCode class="w-6 h-6 text-primary" />
+                     <h3 class="h4 fw-bold mb-0">QR God</h3>
                   </div>
                   <p class="text-secondary mb-4">
-                     A Nigerian-themed taboo game that celebrates local culture. 
-                     Progressive Web App (PWA) with offline support and installability.
+                     Dynamic, full-stack QR Code Generator. Features URL shortening, 
+                     auto-expiring hosted messages, custom colors, and smart logo embedding.
                   </p>
                   
                   <div class="d-flex flex-wrap gap-2 mb-4">
-                    <span class="badge bg-light text-secondary border fw-normal">Vue.js</span>
-                    <span class="badge bg-light text-secondary border fw-normal">PWA</span>
-                    <span class="badge bg-light text-secondary border fw-normal">Game Logic</span>
-                    <span class="badge bg-light text-secondary border fw-normal">Touch Events</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Nuxt 3</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Tailwind CSS</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Redis</span>
+                    <span class="badge bg-light text-secondary border fw-normal">Serverless</span>
                   </div>
 
-                  <a href="https://dev-davies.github.io/dattin/" target="_blank" class="btn btn-primary rounded-pill px-4">
+                  <a href="https://qrgod.vercel.app" target="_blank" class="btn btn-primary rounded-pill px-4">
                       View Project
                   </a>
                </div>
                <div class="col-md-6 order-1 order-md-2">
                   <div class="rounded-4 overflow-hidden shadow-sm position-relative">
-                     <img :src="dattinImg" alt="Dat Tin Game" class="img-fluid w-100 object-fit-cover" />
+                     <img :src="qrgodImg" alt="QR God Developer Project" class="img-fluid w-100 object-fit-cover" />
                   </div>
                </div>
             </div>
