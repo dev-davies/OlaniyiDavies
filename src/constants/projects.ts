@@ -6,7 +6,7 @@ import dattinImg from '@/assets/images/projects/dev-davies.github.io_dattin_.png
 import novelSolarImg from '@/assets/images/projects/novelsolar.com_.png';
 import primePayImg from '@/assets/images/projects/www.prime-pay.africa_.png';
 import zitraImg from '@/assets/images/projects/www.zitrainvestments.com_.png';
-import academyImg from '@/assets/images/projects/Novelsolar Academy.png';
+import academyImg from '@/assets/images/projects/Novel-academy.png';
 import solarProductExchangeImg from '@/assets/images/projects/solarproductexchange.com.png';
 import qrgodImg from '@/assets/images/projects/qrgod.png';
 
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     title: 'Novel Academy',
     description: 'An energy and tech training academy platform. Empowering the next generation of solar engineers and tech talent. LMS currently in development.',
     image: academyImg,
-    tags: ['Vue.js', 'Flask', 'EdTech', 'LMS', 'Training'],
+    tags: ['Nuxt', 'Node.js (Nitro)', 'Turso'],
     link: 'https://novel-academy.com',
     status: 'LMS In Development',
     icon: GraduationCap
