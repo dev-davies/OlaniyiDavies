@@ -14,6 +14,8 @@ $dark: #121212; // Soft Black
   // Light Mode Palette (Cream/Minimalist)
   --bg-color: #F8F8F4;      // Warm Cream
   --text-color: #1A1A1A;    // Soft Black
+  --text-secondary: #555555; // Dark Grey
+  --text-muted: #777777;    // Medium Grey
   --dots-color: #E0E0D8;    // Subtle warm grey for dots
   --card-bg: #FFFFFF;
   --border-color: #E5E5E0;
@@ -21,11 +23,13 @@ $dark: #121212; // Soft Black
 
 [data-bs-theme="dark"] {
   // Dark Mode Palette (Monochrome)
-  --bg-color: #0F0F0F;      // Deep Soft Black
-  --text-color: #EFEFEF;    // Off-white
+  --bg-color: #0A0A0A;      // Even deeper black for better contrast
+  --text-color: #FFFFFF;    // Pure white for maximum contrast
+  --text-secondary: #B0B0B0; // Light grey for secondary text (Much higher than before)
+  --text-muted: #888888;    // Medium-light grey
   --dots-color: #262626;    // Dark grey dots
-  --card-bg: #1A1A1A;
-  --border-color: #333333;
+  --card-bg: #141414;       // Slightly lighter card bg for depth
+  --border-color: #2A2A2A;
 }
 
 body {
@@ -49,6 +53,11 @@ body {
 
 .text-cream { color: #F5F5F0 !important; }
 .bg-cream { background-color: #F8F8F4 !important; }
+
+/* Override Bootstrap text colors with variables */
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.lead { color: var(--text-secondary) !important; }
 
 /* Accessibility: Skip Link */
 .skip-link {
