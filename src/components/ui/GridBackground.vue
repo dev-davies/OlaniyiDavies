@@ -26,6 +26,11 @@ watch([desktopX, desktopY], () => {
 })
 
 const { width, height } = useWindowSize()
+const isMobile = ref(width.value < 768)
+
+watch(width, () => {
+  isMobile.value = width.value < 768
+})
 const isDark = useDark({ selector: 'body', attribute: 'data-bs-theme' })
 
 interface Particle {
@@ -226,15 +231,8 @@ const checkMouseIdle = () => {
 const initParticles = () => {
   particles.length = 0
   
-  // Dynamic Count Logic - Optimized for Performance:
-  // 1. Dark Mode: 500 (Stars) - Balanced for performance
-  // 2. Light Mode: 
-  //    - Desktop: 3000 (Dust Storm) - Reduced for smooth animation
-  //    - Mobile (<768px): 1000 (Light Dust) - Performance friendly
-  let count = 500
-  if (!isDark.value) {
-    count = width.value < 768 ? 1000 : 3000
-  }
+  // Dynamic Count Logic: 400 for Mobile, 1200 for Desktop
+  const count = isMobile.value ? 400 : 1200
   
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -367,7 +365,7 @@ const animate = () => {
     if (isDark.value) {
       // Star Style
       ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`
-      ctx.shadowBlur = p.size * 2
+      ctx.shadowBlur = isMobile.value ? 0 : p.size * 2
       ctx.shadowColor = 'white'
     } else {
       // Busy Dust Style (Darker for contrast against cream)
