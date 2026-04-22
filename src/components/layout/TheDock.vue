@@ -14,7 +14,7 @@ const dockItems = [
 </script>
 
 <template>
-  <div class="fixed-bottom mb-4 d-flex justify-content-center pointer-events-none" style="z-index: 1050;">
+  <nav class="fixed-bottom mb-4 d-flex justify-content-center pointer-events-none" style="z-index: 1050;" aria-label="Main Navigation">
     <div class="dock-container glass-effect p-2 rounded-4 d-flex gap-2 align-items-center shadow-lg pointer-events-auto">
       
       <template v-for="item in dockItems" :key="item.name">
@@ -23,11 +23,12 @@ const dockItems = [
           v-if="item.route"
           :to="item.route"
           class="dock-item btn btn-link text-decoration-none d-flex align-items-center justify-content-center"
+          :aria-label="item.name"
           v-motion
           :initial="{ scale: 1 }"
           :hovered="{ scale: 1.2 }"
         >
-          <component :is="item.icon" class="icon-size" />
+          <component :is="item.icon" class="icon-size" aria-hidden="true" />
         </RouterLink>
 
         <!-- External Link -->
@@ -35,21 +36,23 @@ const dockItems = [
           v-else
           :href="item.href"
           target="_blank"
+          rel="noopener noreferrer"
           class="dock-item btn btn-link text-decoration-none d-flex align-items-center justify-content-center"
-           v-motion
+          :aria-label="`${item.name} (opens in new tab)`"
+          v-motion
           :initial="{ scale: 1 }"
           :hovered="{ scale: 1.2 }"
         >
-          <component :is="item.icon" class="icon-size" />
+          <component :is="item.icon" class="icon-size" aria-hidden="true" />
         </a>
       </template>
 
-      <div class="vr mx-1 bg-secondary opacity-50"></div>
+      <div class="vr mx-1 bg-secondary opacity-50" aria-hidden="true"></div>
       
       <ThemeToggle />
       
     </div>
-  </div>
+  </nav>
 </template>
 
 <style scoped>

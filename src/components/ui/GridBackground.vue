@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { useMouse, useWindowSize, useDark } from '@vueuse/core'
+import { useMouse, useWindowSize, useDark, usePreferredReducedMotion } from '@vueuse/core'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 // Initialize with negative values to ensure 'inactive' state at start
@@ -26,6 +26,7 @@ watch([desktopX, desktopY], () => {
 })
 
 const { width, height } = useWindowSize()
+const preferredReducedMotion = usePreferredReducedMotion()
 const isMobile = ref(width.value < 768)
 
 watch(width, () => {
@@ -268,7 +269,7 @@ watch([isDark, width], () => { // Also re-init on resize to adjust density
 // Animation Loop
 const animate = () => {
   const ctx = canvas.value?.getContext('2d')
-  if (!ctx || !canvas.value) return
+  if (!ctx || !canvas.value || preferredReducedMotion.value === 'reduce') return
 
   // Check for mouse idle
   checkMouseIdle()

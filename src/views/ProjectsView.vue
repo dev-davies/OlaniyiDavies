@@ -4,14 +4,14 @@ import { projects } from '@/constants/projects';
 </script>
 
 <template>
-  <div class="container py-5 min-vh-100">
+  <main id="main-content" class="container py-5 min-vh-100" role="main">
     <!-- Header -->
     <div class="row mb-5">
       <div class="col-12 text-center" v-motion-fade-visible-once>
         <span class="d-inline-block px-3 py-1 rounded-pill bg-body-tertiary border text-secondary small mb-3">
           My Portfolio
         </span>
-        <h2 class="display-4 fw-bold mb-3">Selected Projects</h2>
+        <h1 class="display-4 fw-bold mb-3">Selected Projects</h1>
         <p class="text-secondary lead mx-auto" style="max-width: 600px;">
           A blend of innovative products, corporate solutions, and creative experiments.
         </p>
@@ -37,8 +37,8 @@ import { projects } from '@/constants/projects';
             
             <!-- Overlay (Visible on Hover) -->
             <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-black bg-opacity-50 opacity-0 transition-opacity">
-              <a v-if="project.link" :href="project.link" target="_blank" class="btn btn-light rounded-pill px-4 me-2 scale-up">
-                Visit Site <ExternalLink class="w-4 h-4 ms-1 d-inline" />
+              <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="btn btn-light rounded-pill px-4 me-2 scale-up" :aria-label="`Visit ${project.title} (opens in new tab)`">
+                Visit Site <ExternalLink class="w-4 h-4 ms-1 d-inline" aria-hidden="true" />
               </a>
               <span v-else class="badge bg-warning text-dark py-2 px-3 rounded-pill scale-up">
                 {{ project.status }}
@@ -73,7 +73,7 @@ import { projects } from '@/constants/projects';
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
@@ -91,8 +91,9 @@ import { projects } from '@/constants/projects';
   overflow: hidden;
 }
 
-/* Hover Effects */
-.project-card:hover .overlay {
+/* Hover & Focus Effects */
+.project-card:hover .overlay,
+.project-card:focus-within .overlay {
   opacity: 1 !important;
 }
 

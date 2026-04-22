@@ -15,7 +15,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
 </script>
 
 <template>
-  <div class="container py-5">
+  <main id="main-content" class="container py-5" role="main">
     <!-- Hero Section -->
     <div class="row min-h-screen align-items-center mb-5">
       <div class="col-12 text-center">
@@ -100,7 +100,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
               :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
             >
               <div class="card-body p-5 d-flex flex-column align-items-center text-center">
-                <h5 class="card-title fw-bold mb-4 h5">{{ skill.name }}</h5>
+                <h3 class="card-title fw-bold mb-4 h5">{{ skill.name }}</h3>
                 <div class="icons-grid mb-3">
                   <div 
                     v-for="(icon, index) in skill.icons" 
@@ -148,7 +148,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
                     <span class="badge bg-light text-secondary border fw-normal">Serverless</span>
                   </div>
 
-                  <a href="https://qrgod.vercel.app" target="_blank" class="btn btn-primary rounded-pill px-4">
+                  <a href="https://qrgod.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4" aria-label="View QR God project (opens in new tab)">
                       View Project
                   </a>
                </div>
@@ -191,7 +191,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
           >
             <div class="timeline-dot bg-dark rounded-circle border border-4 border-light position-absolute" style="width: 16px; height: 16px; left: 17px; top: 5px;"></div>
             <div class="ps-5">
-              <h4 class="h5 fw-bold mb-1">{{ exp.title }}</h4>
+              <h3 class="h5 fw-bold mb-1">{{ exp.title }}</h3>
               <p class="text-secondary small mb-2">{{ exp.company }} &bull; {{ exp.period }}</p>
               <p class="text-muted">{{ exp.description }}</p>
             </div>
@@ -211,12 +211,12 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
 
         <div class="d-flex justify-content-center gap-4 mb-4">
            
-           <a :href="personal.social.github" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.github" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-secondary social-link" aria-label="GitHub (opens in new tab)">
              <Github class="w-8 h-8" />
              <span class="d-block small mt-2">GitHub</span>
            </a>
 
-           <a :href="personal.social.linkedin" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.linkedin" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-secondary social-link" aria-label="LinkedIn (opens in new tab)">
              <Linkedin class="w-8 h-8" />
              <span class="d-block small mt-2">LinkedIn</span>
            </a>
@@ -226,7 +226,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
              <span class="d-block small mt-2">Email</span>
            </a>
 
-           <a :href="personal.social.whatsapp" target="_blank" class="text-decoration-none text-secondary social-link">
+           <a :href="personal.social.whatsapp" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-secondary social-link" aria-label="WhatsApp (opens in new tab)">
              <MessageCircle class="w-8 h-8" />
              <span class="d-block small mt-2">WhatsApp</span>
            </a>
@@ -239,7 +239,7 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
 
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
