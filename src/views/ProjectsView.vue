@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { ExternalLink } from 'lucide-vue-next';
+import { ExternalLink, ArrowLeft } from 'lucide-vue-next';
 import { projects } from '@/constants/projects';
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-  <main id="main-content" class="container py-5 min-vh-100" role="main">
+  <main id="main-content" class="container py-5 min-vh-100 position-relative" role="main">
+    <!-- Back Button -->
+    <div class="mb-4" v-motion-fade-visible-once>
+      <RouterLink to="/" class="btn btn-link text-secondary text-decoration-none d-inline-flex align-items-center gap-2 p-0 back-link">
+        <ArrowLeft class="w-5 h-5" />
+        <span class="fw-medium">Back to Home</span>
+      </RouterLink>
+    </div>
+
     <!-- Header -->
     <div class="row mb-5">
       <div class="col-12 text-center" v-motion-fade-visible-once>
@@ -64,7 +73,7 @@ import { projects } from '@/constants/projects';
               <span 
                 v-for="tag in project.tags" 
                 :key="tag" 
-                class="badge bg-body-tertiary text-secondary fw-normal border"
+                class="tech-badge"
               >
                 {{ tag }}
               </span>
@@ -128,5 +137,36 @@ import { projects } from '@/constants/projects';
 .project-card:hover img,
 .project-card:active img {
   filter: grayscale(0%);
+}
+.tech-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .tech-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tech-badge:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-color: var(--text-color);
+  transform: translateY(-2px);
+}
+
+.back-link {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--text-color) !important;
+  transform: translateX(-5px);
 }
 </style>

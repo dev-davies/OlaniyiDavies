@@ -1,17 +1,34 @@
 <script setup lang="ts">
-import { Camera, Github, Linkedin, Mail, MessageCircle, QrCode, Download } from 'lucide-vue-next';
+import { Camera, Github, Linkedin, Mail, MessageCircle, Download } from 'lucide-vue-next';
 import portraitUrl from '@/assets/images/portrait.jpg';
-import qrgodImg from '@/assets/images/projects/qrgod.png';
 
 // Import constants
 import { skills } from '@/constants/skills';
 import { personal } from '@/constants/personal';
+import { projects } from '@/constants/projects';
+import { computed } from 'vue';
 
 // Import composables
 import { useTextMorph } from '@/composables/useTextMorph';
 
 // Use text morphing composable
 const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
+
+// Logic to rotate highlighted project every 3 days
+const highlightedProject = computed(() => {
+  if (!projects.length) return null;
+  
+  const ROTATION_DAYS = 3;
+  const startOfEpoch = new Date('2024-01-01').getTime(); // Fixed reference point
+  const now = Date.now();
+  
+  const msInDay = 1000 * 60 * 60 * 24;
+  const daysSinceEpoch = Math.floor((now - startOfEpoch) / msInDay);
+  
+  // Use modulo to cycle through projects
+  const rotationIndex = Math.floor(daysSinceEpoch / ROTATION_DAYS) % projects.length;
+  return projects[rotationIndex];
+});
 </script>
 
 <template>
@@ -127,34 +144,37 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
        <div class="col-lg-10">
           <h2 class="h3 fw-bold mb-4 text-center">What I have been upto</h2>
           <div 
+            v-if="highlightedProject"
             class="card about-card border-0 shadow-sm p-4 p-md-5 overflow-hidden mb-4" 
             v-motion-slide-visible-once-bottom
           >
             <div class="row align-items-center g-5">
                <div class="col-md-6 order-2 order-md-1">
                   <div class="d-flex align-items-center gap-2 mb-3">
-                     <QrCode class="w-6 h-6 text-primary" />
-                     <h3 class="h4 fw-bold mb-0">QR God</h3>
+                     <component :is="highlightedProject.icon" class="w-6 h-6 text-primary" />
+                     <h3 class="h4 fw-bold mb-0">{{ highlightedProject.title }}</h3>
                   </div>
                   <p class="text-secondary mb-4">
-                     Dynamic, full-stack QR Code Generator. Features URL shortening, 
-                     auto-expiring hosted messages, custom colors, and smart logo embedding.
+                     {{ highlightedProject.description }}
                   </p>
                   
                   <div class="d-flex flex-wrap gap-2 mb-4">
-                    <span class="badge bg-light text-secondary border fw-normal">Nuxt 3</span>
-                    <span class="badge bg-light text-secondary border fw-normal">Tailwind CSS</span>
-                    <span class="badge bg-light text-secondary border fw-normal">Redis</span>
-                    <span class="badge bg-light text-secondary border fw-normal">Serverless</span>
+                    <span 
+                      v-for="tag in highlightedProject.tags" 
+                      :key="tag" 
+                      class="tech-badge"
+                    >
+                      {{ tag }}
+                    </span>
                   </div>
 
-                  <a href="https://qrgod.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4" aria-label="View QR God project (opens in new tab)">
+                  <a v-if="highlightedProject.link" :href="highlightedProject.link" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill px-4" :aria-label="`View ${highlightedProject.title} project (opens in new tab)`">
                       View Project
                   </a>
                </div>
                <div class="col-md-6 order-1 order-md-2">
                   <div class="rounded-4 overflow-hidden shadow-sm position-relative">
-                     <img :src="qrgodImg" alt="QR God Developer Project" class="img-fluid w-100 object-fit-cover" />
+                     <img :src="highlightedProject.image" :alt="`${highlightedProject.title} Project Showcase`" class="img-fluid w-100 object-fit-cover" />
                   </div>
                </div>
             </div>
@@ -415,5 +435,28 @@ const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(255, 255, 255, 1) !important;
   color: #fff !important;
+}
+
+.tech-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .tech-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tech-badge:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-color: var(--text-color);
+  transform: translateY(-2px);
 }
 </style>
