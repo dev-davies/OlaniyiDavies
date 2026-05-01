@@ -41,7 +41,7 @@ import { RouterLink } from 'vue-router';
           <!-- Image Container -->
           <div class="card-img-top position-relative overflow-hidden rounded-4 shadow-sm mb-3 group-hover-lift">
             <div class="aspect-ratio-box">
-              <img :src="project.image" :alt="project.title" class="img-fluid w-100 h-100 object-fit-cover" />
+              <img :src="project.image" :alt="project.title" class="img-fluid w-100 h-100 object-fit-cover" loading="lazy" />
             </div>
             
             <!-- Overlay (Visible on Hover) -->

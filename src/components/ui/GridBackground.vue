@@ -49,6 +49,24 @@ interface Particle {
 
 const particles: Particle[] = []
 let animationFrameId: number
+let lastFrameTime = 0
+const TARGET_FPS = 30
+const FRAME_INTERVAL = 1000 / TARGET_FPS
+
+// Pre-rendered glow sprite (replaces expensive per-particle shadowBlur)
+const glowCanvas = document.createElement('canvas')
+const GLOW_SIZE = 24
+glowCanvas.width = GLOW_SIZE
+glowCanvas.height = GLOW_SIZE
+;(() => {
+  const gCtx = glowCanvas.getContext('2d')
+  if (!gCtx) return
+  const g = gCtx.createRadialGradient(GLOW_SIZE / 2, GLOW_SIZE / 2, 0, GLOW_SIZE / 2, GLOW_SIZE / 2, GLOW_SIZE / 2)
+  g.addColorStop(0, 'rgba(255, 255, 255, 0.35)')
+  g.addColorStop(1, 'rgba(255, 255, 255, 0)')
+  gCtx.fillStyle = g
+  gCtx.fillRect(0, 0, GLOW_SIZE, GLOW_SIZE)
+})()
 
 // Generate different shape patterns
 const generateTextShape = (text: string, centerX: number, centerY: number, fontSize: number = 120): { x: number; y: number }[] => {
@@ -233,7 +251,7 @@ const initParticles = () => {
   particles.length = 0
   
   // Dynamic Count Logic: 400 for Mobile, 1200 for Desktop
-  const count = isMobile.value ? 400 : 1200
+  const count = isMobile.value ? 250 : 600
   
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -261,34 +279,54 @@ const handleTouchMove = (e: TouchEvent) => {
   }
 }
 
-// Watch for theme changes to re-init particles
-watch([isDark, width], () => { // Also re-init on resize to adjust density
-  initParticles()
+// Consolidated watcher: theme changes + resize
+watch([isDark, width, height], () => {
+  if (canvas.value) {
+    canvas.value.width = width.value
+    canvas.value.height = height.value
+    initParticles()
+  }
 })
 
 // Animation Loop
-const animate = () => {
+const animate = (timestamp: number = 0) => {
+  animationFrameId = requestAnimationFrame(animate)
+
+  // Frame throttle — cap at 30fps for smooth but efficient rendering
+  const elapsed = timestamp - lastFrameTime
+  if (elapsed < FRAME_INTERVAL) return
+  lastFrameTime = timestamp - (elapsed % FRAME_INTERVAL)
+
   const ctx = canvas.value?.getContext('2d')
   if (!ctx || !canvas.value || preferredReducedMotion.value === 'reduce') return
 
   // Check for mouse idle
   checkMouseIdle()
 
+  // Cache reactive values outside hot loop to avoid repeated Vue proxy access
+  const w = width.value
+  const h = height.value
+  const dark = isDark.value
+  const mobile = isMobile.value
+  const mx = mouseX.value
+  const my = mouseY.value
+
   // Clear Canvas
-  ctx.clearRect(0, 0, width.value, height.value)
+  ctx.clearRect(0, 0, w, h)
   
   particles.forEach((p, index) => {
     // 1. Calculate distance to mouse/touch
-    const dx = mouseX.value - p.x
-    const dy = mouseY.value - p.y
-    const distance = Math.sqrt(dx * dx + dy * dy)
+    const dx = mx - p.x
+    const dy = my - p.y
+    const distSq = dx * dx + dy * dy
+    const distance = Math.sqrt(distSq)
     
     // 2. Twinkle Logic (Dark Mode Only)
-    if (isDark.value) {
+    if (dark) {
       p.opacity += p.twinkleSpeed
       if (p.opacity > 1 || p.opacity < 0.2) p.twinkleSpeed = -p.twinkleSpeed
     } else {
-      p.opacity = 0.6 // Consistent solid look in Light Mode
+      p.opacity = 0.6
     }
 
     // 3. Shape Formation Mode (only for designated particles)
@@ -306,8 +344,8 @@ const animate = () => {
       if (p.targetX !== undefined && p.targetY !== undefined) {
         // Apply pulse effect (breathing motion)
         const pulseScale = 1 + Math.sin(pulsePhase.value) * 0.1
-        const targetX = mouseX.value + (p.targetX - mouseX.value) * pulseScale
-        const targetY = mouseY.value + (p.targetY - mouseY.value) * pulseScale
+        const targetX = mx + (p.targetX - mx) * pulseScale
+        const targetY = my + (p.targetY - my) * pulseScale
         
         const tdx = targetX - p.x
         const tdy = targetY - p.y
@@ -354,41 +392,30 @@ const animate = () => {
     p.y += p.vy
 
     // 6. Wrap
-    if (p.x < 0) p.x = width.value
-    if (p.x > width.value) p.x = 0
-    if (p.y < 0) p.y = height.value
-    if (p.y > height.value) p.y = 0
+    if (p.x < 0) p.x = w
+    if (p.x > w) p.x = 0
+    if (p.y < 0) p.y = h
+    if (p.y > h) p.y = 0
 
     // 7. Draw
+    if (dark) {
+      // Glow effect via pre-rendered sprite (replaces expensive shadowBlur)
+      if (!mobile && p.size > 0.8) {
+        const glowScale = p.size * 4
+        ctx.globalAlpha = p.opacity * 0.4
+        ctx.drawImage(glowCanvas, p.x - glowScale / 2, p.y - glowScale / 2, glowScale, glowScale)
+        ctx.globalAlpha = 1
+      }
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`
+    } else {
+      ctx.fillStyle = `rgba(100, 100, 90, ${p.opacity})`
+    }
     ctx.beginPath()
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-    
-    if (isDark.value) {
-      // Star Style
-      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`
-      ctx.shadowBlur = isMobile.value ? 0 : p.size * 2
-      ctx.shadowColor = 'white'
-    } else {
-      // Busy Dust Style (Darker for contrast against cream)
-      ctx.fillStyle = `rgba(100, 100, 90, ${p.opacity})`
-      ctx.shadowBlur = 0
-    }
-    
     ctx.fill()
-    ctx.shadowBlur = 0 
   })
 
-  animationFrameId = requestAnimationFrame(animate)
 }
-
-// Handle resizing
-watch([width, height], () => {
-  if (canvas.value) {
-    canvas.value.width = width.value
-    canvas.value.height = height.value
-    initParticles()
-  }
-})
 
 // Start
 onMounted(() => {

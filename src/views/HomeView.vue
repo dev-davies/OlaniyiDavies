@@ -174,7 +174,7 @@ const highlightedProject = computed(() => {
                </div>
                <div class="col-md-6 order-1 order-md-2">
                   <div class="rounded-4 overflow-hidden shadow-sm position-relative">
-                     <img :src="highlightedProject.image" :alt="`${highlightedProject.title} Project Showcase`" class="img-fluid w-100 object-fit-cover" />
+                     <img :src="highlightedProject.image" :alt="`${highlightedProject.title} Project Showcase`" class="img-fluid w-100 object-fit-cover" loading="lazy" />
                   </div>
                </div>
             </div>
