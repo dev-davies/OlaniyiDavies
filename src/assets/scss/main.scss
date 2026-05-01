@@ -22,7 +22,8 @@ $dark: #121212; // Soft Black
 @import "bootstrap/scss/card";            // card, card-body, card-title
 @import "bootstrap/scss/badge";           // badge
 @import "bootstrap/scss/helpers";         // position, vr, visually-hidden, etc.
-@import "bootstrap/scss/utilities/api";   // d-flex, text-center, gap-*, p-*, m-*, etc.
+@import "bootstrap/scss/utilities";       // defines the $utilities variable map
+@import "bootstrap/scss/utilities/api";   // generates the utility classes (d-flex, gap, p, m, etc.)
 
 :root {
   // Light Mode Palette (Cream/Minimalist)
