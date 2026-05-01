@@ -5,10 +5,17 @@ import htmlIcon from '@/assets/icons/html.svg';
 import cssIcon from '@/assets/icons/css.svg';
 import bootstrapIcon from '@/assets/icons/bootstrap.svg';
 import vuejsIcon from '@/assets/icons/vuejs.svg';
+import nuxtIcon from '@/assets/icons/nuxt.svg';
+import reactIcon from '@/assets/icons/react.svg';
+import nextjsIcon from '@/assets/icons/nextjs.svg';
+
 import phpIcon from '@/assets/icons/php.svg';
 import laravelIcon from '@/assets/icons/laravel.svg';
 import pythonIcon from '@/assets/icons/python.svg';
 import flaskIcon from '@/assets/icons/flask.svg';
+import nodejsIcon from '@/assets/icons/nodejs.svg';
+import nitroIcon from '@/assets/icons/nitro.svg';
+
 import postgresqlIcon from '@/assets/icons/postgresql.svg';
 import sqliteIcon from '@/assets/icons/sqlite.svg';
 import pwaIcon from '@/assets/icons/pwa.svg';
@@ -23,9 +30,12 @@ export const skills: Skill[] = [
       { src: htmlIcon, name: 'HTML' },
       { src: cssIcon, name: 'CSS' },
       { src: bootstrapIcon, name: 'Bootstrap' },
-      { src: vuejsIcon, name: 'Vue.js' }
+      { src: vuejsIcon, name: 'Vue.js' },
+      { src: nuxtIcon, name: 'Nuxt' },
+      { src: reactIcon, name: 'React' },
+      { src: nextjsIcon, name: 'Next.js' }
     ], 
-    desc: 'HTML, CSS, Bootstrap, Vue.js' 
+    desc: 'HTML, CSS, Bootstrap, Vue, React, Nuxt, Next' 
   },
   { 
     name: 'Backend', 
@@ -33,9 +43,11 @@ export const skills: Skill[] = [
       { src: phpIcon, name: 'PHP' },
       { src: laravelIcon, name: 'Laravel' },
       { src: pythonIcon, name: 'Python' },
-      { src: flaskIcon, name: 'Flask' }
+      { src: flaskIcon, name: 'Flask' },
+      { src: nodejsIcon, name: 'Node.js' },
+      { src: nitroIcon, name: 'Nitro' }
     ], 
-    desc: 'PHP (Laravel), Python (Flask)' 
+    desc: 'PHP, Python, Node.js, Laravel, Flask, Nitro' 
   },
   { 
     name: 'Database', 
