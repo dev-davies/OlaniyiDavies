@@ -7,8 +7,22 @@ $secondary: #666666;
 $light: #F5F5F0; // Cream
 $dark: #121212; // Soft Black
 
-// 3. Import Bootstrap
-@import "bootstrap/scss/bootstrap";
+// 3. Import only the Bootstrap modules we actually use
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";            // display-*, h*, lead, small
+@import "bootstrap/scss/images";          // img-fluid
+@import "bootstrap/scss/containers";      // container
+@import "bootstrap/scss/grid";            // row, col-*, g-*
+@import "bootstrap/scss/buttons";         // btn, btn-primary, btn-lg, etc.
+@import "bootstrap/scss/card";            // card, card-body, card-title
+@import "bootstrap/scss/badge";           // badge
+@import "bootstrap/scss/helpers";         // position, vr, visually-hidden, etc.
+@import "bootstrap/scss/utilities/api";   // d-flex, text-center, gap-*, p-*, m-*, etc.
 
 :root {
   // Light Mode Palette (Cream/Minimalist)

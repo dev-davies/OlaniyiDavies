@@ -4,7 +4,8 @@ import App from './App.vue'
 import router from './router'
 import { MotionPlugin } from '@vueuse/motion'
 
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+// Bootstrap JS removed — no JS components (modals, dropdowns, etc.) are used
 
 const app = createApp(App)
 
