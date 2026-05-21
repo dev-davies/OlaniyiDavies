@@ -2,7 +2,7 @@ import type { Project } from '@/types/project';
 import { Zap, CreditCard, Gamepad2, GraduationCap, TrendingUp, QrCode } from 'lucide-vue-next';
 
 // Import Project Images
-import dattinImg from '@/assets/images/projects/dev-davies.github.io_dattin_.png';
+import ariyaImg from '@/assets/images/projects/Ariya_HUB.png';
 import novelSolarImg from '@/assets/images/projects/novelsolar.com_.png';
 import primePayImg from '@/assets/images/projects/www.prime-pay.africa_.png';
 import zitraImg from '@/assets/images/projects/www.zitrainvestments.com_.png';
@@ -22,11 +22,11 @@ export const projects: Project[] = [
   },
   {
     id: 1,
-    title: 'Dat Tin',
-    description: 'A Nigerian-themed taboo game that celebrates local culture. Progressive Web App (PWA) with offline support and installability.',
-    image: dattinImg,
-    tags: ['Vue.js', 'PWA', 'Game Logic', 'Touch Events'],
-    link: 'https://dev-davies.github.io/dattin/',
+    title: 'Ariya',
+    description: 'A premium, high-energy party game collection built for friends, vibes, and plenty of "gist". Features Dat Tin, Imposter, Gidigidi, and Gbe Body.',
+    image: ariyaImg,
+    tags: ['Nuxt 3', 'PWA', 'Vanilla CSS', 'Custom SVG'],
+    link: 'https://ariya-three.vercel.app/',
     icon: Gamepad2
   },
   {
