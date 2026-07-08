@@ -20,11 +20,11 @@ const { posts } = useBlog()
               <img v-if="post.frontmatter.image" :src="post.frontmatter.image" class="card-img-top" :alt="post.frontmatter.title" style="height: 200px; object-fit: cover;" />
               <div class="card-body p-4 d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="text-muted small">{{ post.frontmatter.date }}</span>
-                  <span class="badge bg-light text-dark border">{{ post.frontmatter.readTime }}</span>
+                  <span class="text-body-secondary small">{{ post.frontmatter.date }}</span>
+                  <span class="badge bg-body-secondary text-body-emphasis border">{{ post.frontmatter.readTime }}</span>
                 </div>
-                <h4 class="card-title fw-bold text-dark mb-3">{{ post.frontmatter.title }}</h4>
-                <p class="card-text text-secondary mb-4 flex-grow-1">
+                <h4 class="card-title fw-bold text-body-emphasis mb-3">{{ post.frontmatter.title }}</h4>
+                <p class="card-text text-body-secondary mb-4 flex-grow-1">
                   {{ post.frontmatter.description }}
                 </p>
                 <div class="mt-auto text-primary fw-medium d-flex align-items-center">

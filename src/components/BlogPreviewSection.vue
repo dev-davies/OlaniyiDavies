@@ -24,9 +24,9 @@ const recentPosts = computed(() => posts.value.slice(0, 3))
             <div class="card h-100 border-0 shadow-sm blog-card transition-hover overflow-hidden">
               <img v-if="post.frontmatter.image" :src="post.frontmatter.image" class="card-img-top" :alt="post.frontmatter.title" style="height: 180px; object-fit: cover;" />
               <div class="card-body p-4 d-flex flex-column">
-                <span class="text-muted small mb-2">{{ post.frontmatter.date }}</span>
-                <h5 class="card-title fw-bold text-dark">{{ post.frontmatter.title }}</h5>
-                <p class="card-text text-secondary mb-4 flex-grow-1">
+                <span class="text-body-secondary small mb-2">{{ post.frontmatter.date }}</span>
+                <h5 class="card-title fw-bold text-body-emphasis">{{ post.frontmatter.title }}</h5>
+                <p class="card-text text-body-secondary mb-4 flex-grow-1">
                   {{ post.frontmatter.description }}
                 </p>
                 <div class="mt-auto d-flex align-items-center text-primary fw-medium">
