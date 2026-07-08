@@ -16,30 +16,41 @@ export interface BlogPost {
   component: Component
 }
 
-// Dynamically import all markdown files from the blog directory
-const modules = import.meta.glob<{ default: Component, frontmatter: BlogPostFrontmatter }>(
+import fm from 'front-matter'
+
+// Dynamically import all markdown files from the blog directory for components
+const components = import.meta.glob<{ default: Component }>(
   '../../content/blog/*.md',
   { eager: true }
 )
 
+// Dynamically import all markdown files as raw strings for frontmatter extraction
+const rawFiles = import.meta.glob(
+  '../../content/blog/*.md',
+  { eager: true, query: '?raw', import: 'default' }
+)
+
 // Transform modules into an array of post objects
-const rawPosts = Object.entries(modules).map(([path, module]) => {
+const rawPosts = Object.keys(components).map((path) => {
   // Extract filename from path (e.g., "../../content/blog/my-first-post.md" -> "my-first-post.md")
   const filename = path.split('/').pop() || ''
   // Create slug by removing the .md extension
   const slug = filename.replace(/\.md$/, '')
 
+  const rawContent = rawFiles[path] as string
+  const parsed = fm<BlogPostFrontmatter>(rawContent)
+
   return {
     slug,
-    frontmatter: module.frontmatter || {},
-    component: module.default,
+    frontmatter: parsed.attributes || {},
+    component: components[path]!.default,
   } as BlogPost
 })
 
 // Sort posts by date descending (newest first)
 rawPosts.sort((a, b) => {
-  const dateA = new Date(a.frontmatter.date).getTime()
-  const dateB = new Date(b.frontmatter.date).getTime()
+  const dateA = new Date(a.frontmatter?.date || 0).getTime()
+  const dateB = new Date(b.frontmatter?.date || 0).getTime()
   return dateB - dateA
 })
 
