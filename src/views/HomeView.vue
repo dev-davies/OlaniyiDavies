@@ -10,6 +10,7 @@ import { computed } from 'vue';
 
 // Import composables
 import { useTextMorph } from '@/composables/useTextMorph';
+import BlogPreviewSection from '@/components/BlogPreviewSection.vue';
 
 // Use text morphing composable
 const { wordGroups, isFadingOut } = useTextMorph(personal.titles);
@@ -220,6 +221,9 @@ const highlightedProject = computed(() => {
         </div>
       </div>
     </div>
+
+    <!-- Blog Preview Section -->
+    <BlogPreviewSection />
 
     <!-- Contact Section -->
     <div class="row justify-content-center py-5 mb-5">
