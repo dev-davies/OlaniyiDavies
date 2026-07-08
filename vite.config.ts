@@ -15,7 +15,7 @@ export default defineConfig({
     Markdown({
       wrapperClasses: 'prose',
       markdownItSetup(md) {
-        md.use(Prism)
+        md.use(Prism as any)
       }
     })
   ],
