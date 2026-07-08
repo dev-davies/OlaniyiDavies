@@ -4,6 +4,7 @@ description: "An exploration of human ambition, the Dark and Light Triads, and t
 date: "2026-07-08"
 readTime: "5 min read"
 tags: ["Psychology", "Greatness", "Pop Culture", "Anime"]
+image: "/images/Blog/heading.png"
 ---
 
 ![The Burden of the Pedestal](../../src/assets/images/Blog/heading.png)

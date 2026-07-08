@@ -7,6 +7,7 @@ export interface BlogPostFrontmatter {
   date: string
   readTime: string
   tags?: string[]
+  image?: string
 }
 
 export interface BlogPost {

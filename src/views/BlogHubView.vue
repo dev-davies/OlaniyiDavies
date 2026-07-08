@@ -16,7 +16,8 @@ const { posts } = useBlog()
       <div class="row g-4">
         <div v-for="post in posts" :key="post.slug" class="col-md-6 col-lg-4">
           <RouterLink :to="`/blog/${post.slug}`" class="text-decoration-none">
-            <div class="card h-100 border-0 shadow-sm blog-card transition-hover">
+            <div class="card h-100 border-0 shadow-sm blog-card transition-hover overflow-hidden">
+              <img v-if="post.frontmatter.image" :src="post.frontmatter.image" class="card-img-top" :alt="post.frontmatter.title" style="height: 200px; object-fit: cover;" />
               <div class="card-body p-4 d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="text-muted small">{{ post.frontmatter.date }}</span>

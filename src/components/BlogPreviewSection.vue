@@ -21,7 +21,8 @@ const recentPosts = computed(() => posts.value.slice(0, 3))
       <div class="row g-4">
         <div v-for="post in recentPosts" :key="post.slug" class="col-md-4">
           <RouterLink :to="`/blog/${post.slug}`" class="text-decoration-none">
-            <div class="card h-100 border-0 shadow-sm blog-card transition-hover">
+            <div class="card h-100 border-0 shadow-sm blog-card transition-hover overflow-hidden">
+              <img v-if="post.frontmatter.image" :src="post.frontmatter.image" class="card-img-top" :alt="post.frontmatter.title" style="height: 180px; object-fit: cover;" />
               <div class="card-body p-4 d-flex flex-column">
                 <span class="text-muted small mb-2">{{ post.frontmatter.date }}</span>
                 <h5 class="card-title fw-bold text-dark">{{ post.frontmatter.title }}</h5>

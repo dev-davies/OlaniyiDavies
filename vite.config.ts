@@ -14,6 +14,8 @@ export default defineConfig({
     }),
     Markdown({
       wrapperClasses: 'prose',
+      frontmatter: true,
+      exportFrontmatter: true,
       markdownItSetup(md) {
         md.use(Prism as any)
       }

@@ -102,18 +102,20 @@ const currentUrl = computed(() => typeof window !== 'undefined' ? window.locatio
 }
 
 /* Base styles for the prose markdown content */
-.prose :deep(h1), .prose :deep(h2), .prose :deep(h3) {
+.prose :deep(h1), .prose :deep(h2), .prose :deep(h3), .prose :deep(h4), .prose :deep(h5), .prose :deep(h6) {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  color: var(--bs-heading-color);
 }
-.prose :deep(p) {
+.prose :deep(p), .prose :deep(li) {
   margin-bottom: 1.25rem;
   line-height: 1.7;
-  color: #4a5568;
+  color: var(--bs-body-color);
 }
 .prose :deep(pre) {
-  background-color: #f8f9fa;
+  background-color: var(--bs-tertiary-bg, #f8f9fa);
+  color: var(--bs-body-color);
   border-radius: 8px;
   padding: 1rem;
   overflow-x: auto;
@@ -125,7 +127,8 @@ const currentUrl = computed(() => typeof window !== 'undefined' ? window.locatio
 }
 .prose :deep(img) {
   max-width: 100%;
-  height: auto;
+  max-height: 400px;
+  object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
   margin: 2.5rem auto;
