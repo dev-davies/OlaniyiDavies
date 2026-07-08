@@ -6,6 +6,7 @@ export interface BlogPostFrontmatter {
   description: string
   date: string
   readTime: string
+  tags?: string[]
 }
 
 export interface BlogPost {
@@ -52,8 +53,26 @@ export function useBlog() {
     return posts.value.find(post => post.slug === slug)
   }
 
+  /**
+   * Get the previous (older) and next (newer) post for a given slug
+   */
+  const getAdjacentPosts = (slug: string) => {
+    const index = posts.value.findIndex(post => post.slug === slug)
+    if (index === -1) return { prev: null, next: null }
+    
+    // Since posts are sorted newest first (descending):
+    // The "next" post chronologically is the one before it in the array
+    // The "prev" post chronologically is the one after it in the array
+    const next = index > 0 ? posts.value[index - 1] : null
+    const prev = index < posts.value.length - 1 ? posts.value[index + 1] : null
+
+    return { prev, next }
+  }
+
   return {
     posts,
-    getPostBySlug
+    getPostBySlug,
+    getAdjacentPosts
   }
 }
+
